@@ -18,14 +18,12 @@ EXE = example_glfw_opengl3
 SOURCES = main.cpp
 SOURCES += imgui_impl_glfw.cpp imgui_impl_opengl3.cpp
 SOURCES += imgui.cpp imgui_demo.cpp imgui_draw.cpp imgui_widgets.cpp
-OBJDIR:=./obj
-OBJS = $(addsuffix .o, $(basename $(notdir $(SOURCES))))
 UNAME_S := $(shell uname -s)
-
-CXXFLAGS = -Ilibs/ -Ilibs/imgui
+CXXFLAGS = -Ilibs/ -Ilibs/imgui -Isrc/
 CXXFLAGS += -g -Wall -Wformat
-LIBS =
-
+OBJ_DIR:=./build/obj/
+APP_DIR:=./build/app/
+OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(basename $(notdir $(SOURCES)))))
 ##---------------------------------------------------------------------
 ## OPENGL LOADER
 ##---------------------------------------------------------------------
@@ -77,23 +75,23 @@ endif
 ## BUILD RULES
 ##---------------------------------------------------------------------
 
-$(OBJDIR)%.o:%.cpp
+$(OBJ_DIR)%.o:src/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-%.o:libs/imgui/%.cpp
+$(OBJ_DIR)%.o:libs/imgui/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-%.o:libs/gl3w/GL/%.c
+$(OBJ_DIR)%.o:libs/gl3w/GL/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-%.o:libs/glad/src/%.c
+$(OBJ_DIR)%.o:libs/glad/src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 all: $(EXE)
 	@echo Build complete for $(ECHO_MESSAGE)
 
 $(EXE): $(OBJS)
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBS)
+	$(CXX) -o $(APP_DIR)$@ $^ $(CXXFLAGS) $(LIBS)
 
 clean:
 	rm -f $(EXE) $(OBJS)
