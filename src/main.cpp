@@ -1,11 +1,16 @@
 // dear imgui: standalone example application for GLFW + OpenGL 3, using programmable pipeline
 // If you are new to dear imgui, see examples/README.txt and documentation at the top of imgui.cpp.
 // (GLFW is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan graphics context creation, etc.)
+#include <stdio.h>
+#include <iostream>
+#include <math.h>
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include <stdio.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // About OpenGL function loaders: modern OpenGL doesn't have a standard header file and requires individual function pointers to be loaded manually.
 // Helper libraries are often used for this purpose! Here we are supporting a few common ones: gl3w, glew, glad.
@@ -33,6 +38,19 @@
 static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+}
+
+float vehicle_vertices[] = {
+   -0.5f, -0.5f, 0.0f,
+    0.5f, -0.5f, 0.0f,
+    0.0f,  0.5f, 0.0f
+};
+
+void ComputePositionOffsets(float xOffset, float yOffset, float theta, float &fXOffset, float &fYOffset)
+{
+    //Apply rotation and translation to x/y points of a vertex
+    fXOffset = fXOffset * cosf(theta) - fYOffset * sinf(theta) + xOffset;
+    fYOffset = fXOffset * sinf(theta) - fYOffset *cosf(theta) + yOffset;
 }
 
 int main(int, char**)
@@ -117,6 +135,76 @@ int main(int, char**)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    GLuint vbo = 0;
+    glGenBuffers(1, &vbo);
+    //Bind our vertex buffer array to GL_ARRAY_BUFFER - this is now active
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), vehicle_vertices, GL_STATIC_DRAW); 
+
+    GLuint vao = 0;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    //Make sure we bind vbo buffer to GL_ARRAY_BUFFER
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    //Vertex 0 (first argument) will use vertex at GL_ARRAY_BUFFER location
+    //which was set to vbo location previously
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(0);
+
+    // check for linking errors
+    int success;
+    char infoLog[512];
+
+    //Define a vertex shader that takes a single vertex vp as input
+    //The output will be assigned th default gl_Position variable of typ vec4
+    const char* vertex_shader =
+    "#version 330\n"
+    "in vec3 vp;"
+    "void main() {"
+    "  gl_Position = vec4(vp, 1.0);"
+    "}";
+    //Create a VERTEX SHADER
+    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+    //Attach the shader source code to the shader object
+    glShaderSource(vs, 1, &vertex_shader, NULL);
+    //Dynamically compile the shader at run-time 
+    glCompileShader(vs);
+    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(vs, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+
+    //Create the fragment shader
+    const char* fragment_shader =
+    "#version 330\n"
+    "out vec4 frag_colour;"
+    "void main() {"
+    "  frag_colour = vec4(1.0f, 0.5f, 0.2f, 1.0f);"
+    "}";
+    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fs, 1, &fragment_shader, NULL);
+    glCompileShader(fs);
+    glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(fs, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+
+    //Combined both shaders into a single executable GPU shader programme
+    GLuint shader_programme = glCreateProgram();
+    glAttachShader(shader_programme, fs);
+    glAttachShader(shader_programme, vs);
+    glLinkProgram(shader_programme);
+
+    glGetProgramiv(shader_programme, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(shader_programme, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+    }
+
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -177,6 +265,11 @@ int main(int, char**)
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        //Draw points 0-3 from the currently bound VAO with current in-use shader
+        glUseProgram(shader_programme); //Use the shader programme we created earlier
+        glBindVertexArray(vao);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         glfwSwapBuffers(window);
     }

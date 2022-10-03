@@ -1,4 +1,3 @@
 *.o
 *.exe
-build/app/*
-build/obj/*
+build/
