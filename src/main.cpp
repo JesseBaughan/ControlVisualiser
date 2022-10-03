@@ -144,9 +144,9 @@ int main(int, char**)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    VertexArray va;
     VertexBuffer vb(vehicle_vertices, 9 * sizeof(float));
 
+    VertexArray va;
     VertexBufferLayout layout;
     layout.Push<float>(3);
     va.AddBuffer(vb, layout);
