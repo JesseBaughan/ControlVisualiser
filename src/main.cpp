@@ -14,6 +14,7 @@
 
 #include "vertex_buffer.h"
 #include "index_buffer.h"
+#include "vertex_array.h"
 
 // About OpenGL function loaders: modern OpenGL doesn't have a standard header file and requires individual function pointers to be loaded manually.
 // Helper libraries are often used for this purpose! Here we are supporting a few common ones: gl3w, glew, glad.
@@ -143,16 +144,12 @@ int main(int, char**)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    GLuint vao = 0;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
+    VertexArray va;
     VertexBuffer vb(vehicle_vertices, 9 * sizeof(float));
 
-    glEnableVertexAttribArray(0);
-    //Vertex 0 (first argument) will use vertex at GL_ARRAY_BUFFER location
-    //which was set to vbo location previously
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+    va.AddBuffer(vb, layout);
 
     IndexBuffer ib(indices, 3);
 
@@ -273,7 +270,7 @@ int main(int, char**)
 
         //Draw points 0-3 from the currently bound VAO with current in-use shader
         glUseProgram(shader_programme); //Use the shader programme we created earlier
-        glBindVertexArray(vao);
+        va.Bind();
         ib.Bind();
         //Draw our vertexes which are bound to the vertex array vao
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);

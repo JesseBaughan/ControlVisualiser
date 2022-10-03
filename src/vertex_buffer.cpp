@@ -4,9 +4,11 @@
 
 VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 {
+    //Generate 1 vertex buffer and assign the id to m_RendererID
     glGenBuffers(1, &m_RendererID);
-    //Bind our vertex buffer array to GL_ARRAY_BUFFER - this is now active
+    //Bind our vertex buffer to GL_ARRAY_BUFFER variable - this is now active
     glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+    //Bind the buffer to our data and tell it what size the data is
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW); 
 }
 
