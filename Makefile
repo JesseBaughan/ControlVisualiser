@@ -16,7 +16,7 @@
 
 EXE = example_glfw_opengl3
 SOURCES = main.cpp
-SOURCES += imgui_impl_glfw.cpp imgui_impl_opengl3.cpp
+SOURCES += imgui_impl_glfw.cpp imgui_impl_opengl3.cpp index_buffer.cpp vertex_buffer.cpp
 SOURCES += imgui.cpp imgui_demo.cpp imgui_draw.cpp imgui_widgets.cpp
 UNAME_S := $(shell uname -s)
 CXXFLAGS = -Ilibs/ -Ilibs/imgui -Isrc/

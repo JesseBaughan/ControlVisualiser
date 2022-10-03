@@ -12,6 +12,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "vertex_buffer.h"
+#include "index_buffer.h"
+
 // About OpenGL function loaders: modern OpenGL doesn't have a standard header file and requires individual function pointers to be loaded manually.
 // Helper libraries are often used for this purpose! Here we are supporting a few common ones: gl3w, glew, glad.
 // You may use another loader/header of your choice (glext, glLoadGen, etc.), or chose to manually implement your own.
@@ -45,6 +48,11 @@ float vehicle_vertices[] = {
     0.5f, -0.5f, 0.0f,
     0.0f,  0.5f, 0.0f
 };
+
+unsigned int indices[] = {  // note that we start from 0!
+    0, 1, 3,   // first triangle
+    1, 2, 3    // second triangle
+};  
 
 void ComputePositionOffsets(float xOffset, float yOffset, float theta, float &fXOffset, float &fYOffset)
 {
@@ -135,21 +143,18 @@ int main(int, char**)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    GLuint vbo = 0;
-    glGenBuffers(1, &vbo);
-    //Bind our vertex buffer array to GL_ARRAY_BUFFER - this is now active
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), vehicle_vertices, GL_STATIC_DRAW); 
-
     GLuint vao = 0;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-    //Make sure we bind vbo buffer to GL_ARRAY_BUFFER
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    VertexBuffer vb(vehicle_vertices, 9 * sizeof(float));
+
+    glEnableVertexAttribArray(0);
     //Vertex 0 (first argument) will use vertex at GL_ARRAY_BUFFER location
     //which was set to vbo location previously
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(0);
+
+    IndexBuffer ib(indices, 3);
 
     // check for linking errors
     int success;
@@ -257,7 +262,7 @@ int main(int, char**)
             ImGui::End();
         }
 
-        // Rendering
+        // Rendering of the GUI
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
@@ -269,7 +274,9 @@ int main(int, char**)
         //Draw points 0-3 from the currently bound VAO with current in-use shader
         glUseProgram(shader_programme); //Use the shader programme we created earlier
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        ib.Bind();
+        //Draw our vertexes which are bound to the vertex array vao
+        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
     }
