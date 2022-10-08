@@ -15,6 +15,7 @@
 #include "vertex_buffer.h"
 #include "index_buffer.h"
 #include "vertex_array.h"
+#include "shader.h"
 
 // About OpenGL function loaders: modern OpenGL doesn't have a standard header file and requires individual function pointers to be loaded manually.
 // Helper libraries are often used for this purpose! Here we are supporting a few common ones: gl3w, glew, glad.
@@ -157,55 +158,13 @@ int main(int, char**)
     int success;
     char infoLog[512];
 
-    //Define a vertex shader that takes a single vertex vp as input
-    //The output will be assigned th default gl_Position variable of typ vec4
-    const char* vertex_shader =
-    "#version 330\n"
-    "in vec3 vp;"
-    "void main() {"
-    "  gl_Position = vec4(vp, 1.0);"
-    "}";
-    //Create a VERTEX SHADER
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    //Attach the shader source code to the shader object
-    glShaderSource(vs, 1, &vertex_shader, NULL);
-    //Dynamically compile the shader at run-time 
-    glCompileShader(vs);
-    glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vs, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
+    Shader::ShaderProgramSource source = Shader::ParseShader("res/shaders/Basic.shader");
+    std::cout << "Fragment" << std::endl;
+    std::cout << source.VertexShader << std::endl;
+    std::cout << "Fragment" << std::endl;
+    std::cout << source.FragmentShader << std::endl;
 
-    //Create the fragment shader
-    const char* fragment_shader =
-    "#version 330\n"
-    "out vec4 frag_colour;"
-    "void main() {"
-    "  frag_colour = vec4(1.0f, 0.5f, 0.2f, 1.0f);"
-    "}";
-    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &fragment_shader, NULL);
-    glCompileShader(fs);
-    glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fs, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    //Combined both shaders into a single executable GPU shader programme
-    GLuint shader_programme = glCreateProgram();
-    glAttachShader(shader_programme, fs);
-    glAttachShader(shader_programme, vs);
-    glLinkProgram(shader_programme);
-
-    glGetProgramiv(shader_programme, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shader_programme, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-    }
+    unsigned int shader = Shader::CreateShader(source.VertexShader, source.FragmentShader);
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -269,7 +228,7 @@ int main(int, char**)
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         //Draw points 0-3 from the currently bound VAO with current in-use shader
-        glUseProgram(shader_programme); //Use the shader programme we created earlier
+        glUseProgram(shader); //Use the shader programme we created earlier
         va.Bind();
         ib.Bind();
         //Draw our vertexes which are bound to the vertex array vao
