@@ -151,20 +151,10 @@ int main(int, char**)
     VertexBufferLayout layout;
     layout.Push<float>(3);
     va.AddBuffer(vb, layout);
-
     IndexBuffer ib(indices, 3);
 
-    // check for linking errors
-    int success;
-    char infoLog[512];
-
-    Shader::ShaderProgramSource source = Shader::ParseShader("res/shaders/Basic.shader");
-    std::cout << "Fragment" << std::endl;
-    std::cout << source.VertexShader << std::endl;
-    std::cout << "Fragment" << std::endl;
-    std::cout << source.FragmentShader << std::endl;
-
-    unsigned int shader = Shader::CreateShader(source.VertexShader, source.FragmentShader);
+    Shader shader = Shader("res/shaders/Basic.shader");
+    shader.Bind();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -228,7 +218,7 @@ int main(int, char**)
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         //Draw points 0-3 from the currently bound VAO with current in-use shader
-        glUseProgram(shader); //Use the shader programme we created earlier
+        shader.Bind();
         va.Bind();
         ib.Bind();
         //Draw our vertexes which are bound to the vertex array vao

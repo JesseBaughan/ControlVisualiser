@@ -6,17 +6,20 @@
 #include <sstream>
 
 Shader::Shader(const std::string& filepath)
+    : m_filePath(filepath),
+      m_RendererID(0)
 {
-
+    ShaderProgramSource source = ParseShader(filepath);
+    m_RendererID = CreateShader(source.VertexShader, source.FragmentShader);
 }
 
 Shader::~Shader()
 {
-
+    glDeleteProgram(m_RendererID);
 }
 
 //TODO: use C++11 raw string literals 
-Shader::ShaderProgramSource Shader::ParseShader(const std::string& filepath)
+ShaderProgramSource Shader::ParseShader(const std::string& filepath)
 {
 	std::ifstream stream(filepath);
 
@@ -100,18 +103,26 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 
 void Shader::Bind() const
 {
-
+    glUseProgram(m_RendererID);
 }
 
 void Shader::Unbind() const
 {
-
+    glUseProgram(0);
 }
 
-/*
 // Set uniforms
-void Shader::SetUniforms4f(const std:string& name, float v0, float v1, float f2, float f3) 
+void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) 
 {
-
+    glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
 }
-*/
+
+unsigned int Shader::GetUniformLocation(const std::string& name)
+{
+    unsigned int location = glGetUniformLocation(m_RendererID, name.c_str());
+    if(location == -1)
+    {
+        std::cout << "Warning: uniform doesn't exist";
+    }
+    return location;
+}
