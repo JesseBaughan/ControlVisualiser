@@ -5,7 +5,7 @@
 #include <iostream>
 #include <math.h>
 
-#include "imgui.h"
+#include "imgui/imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include <glm/glm.hpp>
@@ -45,6 +45,21 @@
 static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+}
+
+void windowResizeHandler(int windowWidth, int windowHeight, float& x, float& y){
+    const float aspectRatio = ((float)windowWidth) / windowHeight;
+    float xSpan = 1; // Feel free to change this to any xSpan you need.
+    float ySpan = 1; // Feel free to change this to any ySpan you need.
+
+    if (aspectRatio > 1){
+        // Width > Height, so scale xSpan accordinly.
+        x = xSpan * aspectRatio;
+    }
+    else{
+        // Height >= Width, so scale ySpan accordingly.
+        y = ySpan / aspectRatio;
+    }
 }
 
 int main(int, char**)
@@ -130,6 +145,14 @@ int main(int, char**)
         0.0f,  0.5f, 0.0f
     };
 
+    /*
+    float vehicle_vertices[] = {
+        -100.5f, -100.5f, 0.0f,
+        100.5f, -100.5f, 0.0f,
+        100.0f,  100.5f, 0.0f
+    };
+    */
+
     unsigned int indices[] = {  // note that we start from 0!
         0, 1, 3,   // first triangle
         1, 2, 3    // second triangle
@@ -149,18 +172,8 @@ int main(int, char**)
 
     IndexBuffer ib(indices, 3);
 
-    //Rotate 90degrees about z-axis
-    glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(35.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
-    //Translate by some X/Y amount
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.1f, 0.0f)); 
-
     Shader shader = Shader("res/shaders/Basic.shader");
     shader.Bind();
-
-    va.UnBind();
-    vb.Unbind();
-    ib.Unbind();
-    shader.Unbind();
 
     Renderer renderer;
 
@@ -225,12 +238,19 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        float ratio = display_w/display_h;
         shader.Bind();
-        shader.SetUniformMat4f("u_MVP", translation);
+        float aspect = (float)display_w/display_h;
+        glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
+        //Rotate 90degrees about z-axis
+        glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
+        //Translate by some X/Y amount
+        glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)); 
         shader.SetUniformMat4f("u_MVP", rotate);
+        shader.SetUniformMat4f("u_MVP", translation);
+        shader.SetUniformMat4f("u_MVP", proj);
         renderer.Draw(va, ib, shader);
         shader.Unbind();
+
 
         glfwSwapBuffers(window);
     }

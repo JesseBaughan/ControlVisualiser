@@ -37,5 +37,6 @@
 		"typeinfo": "cpp",
 		"utility": "cpp"
 	},
-	"cmake.sourceDirectory": "${workspaceFolder}/libs/glm"
+	"cmake.sourceDirectory": "${workspaceFolder}/libs/glm",
+	"cmake.configureOnOpen": false
 }
