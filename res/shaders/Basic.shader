@@ -4,6 +4,7 @@
 in vec3 vp;
 
 uniform mat4 u_MVP;
+uniform mat4 project;
 
 void main() 
 {

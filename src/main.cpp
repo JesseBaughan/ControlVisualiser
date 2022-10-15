@@ -242,15 +242,15 @@ int main(int, char**)
         float aspect = (float)display_w/display_h;
         glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
         //Rotate 90degrees about z-axis
-        glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(30.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
+        glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
         //Translate by some X/Y amount
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)); 
-        shader.SetUniformMat4f("u_MVP", rotate);
-        shader.SetUniformMat4f("u_MVP", translation);
-        shader.SetUniformMat4f("u_MVP", proj);
+
+        glm::mat4 transformation = proj * translation * rotate;
+        shader.SetUniformMat4f("u_MVP", transformation);
+        //shader.SetUniformMat4f("project", proj);
         renderer.Draw(va, ib, shader);
         shader.Unbind();
-
 
         glfwSwapBuffers(window);
     }
