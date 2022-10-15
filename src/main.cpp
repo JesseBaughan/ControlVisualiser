@@ -47,13 +47,6 @@ static void glfw_error_callback(int error, const char* description)
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
-void ComputePositionOffsets(float xOffset, float yOffset, float theta, float &fXOffset, float &fYOffset)
-{
-    //Apply rotation and translation to x/y points of a vertex
-    fXOffset = fXOffset * cosf(theta) - fYOffset * sinf(theta) + xOffset;
-    fYOffset = fXOffset * sinf(theta) - fYOffset *cosf(theta) + yOffset;
-}
-
 int main(int, char**)
 {
     // Setup window
@@ -156,15 +149,18 @@ int main(int, char**)
 
     IndexBuffer ib(indices, 3);
 
+    //Rotate 90degrees about z-axis
+    glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(35.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
+    //Translate by some X/Y amount
     glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.1f, 0.0f)); 
 
     Shader shader = Shader("res/shaders/Basic.shader");
     shader.Bind();
-    shader.SetUniformMat4f("u_MVP", translation);
 
     va.UnBind();
     vb.Unbind();
     ib.Unbind();
+    shader.Unbind();
 
     Renderer renderer;
 
@@ -229,9 +225,12 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+        float ratio = display_w/display_h;
         shader.Bind();
         shader.SetUniformMat4f("u_MVP", translation);
+        shader.SetUniformMat4f("u_MVP", rotate);
         renderer.Draw(va, ib, shader);
+        shader.Unbind();
 
         glfwSwapBuffers(window);
     }
