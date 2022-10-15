@@ -16,6 +16,8 @@
 #include "index_buffer.h"
 #include "vertex_array.h"
 #include "shader.h"
+#include "renderer.h"
+#include "vertex_buffer_layout.h"
 
 // About OpenGL function loaders: modern OpenGL doesn't have a standard header file and requires individual function pointers to be loaded manually.
 // Helper libraries are often used for this purpose! Here we are supporting a few common ones: gl3w, glew, glad.
@@ -44,17 +46,6 @@ static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
-
-float vehicle_vertices[] = {
-   -0.5f, -0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    0.0f,  0.5f, 0.0f
-};
-
-unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 3,   // first triangle
-    1, 2, 3    // second triangle
-};  
 
 void ComputePositionOffsets(float xOffset, float yOffset, float theta, float &fXOffset, float &fYOffset)
 {
@@ -140,21 +131,36 @@ int main(int, char**)
     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
     //IM_ASSERT(font != NULL);
 
+    float vehicle_vertices[] = {
+    -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f,  0.5f, 0.0f
+    };
+
+    unsigned int indices[] = {  // note that we start from 0!
+        0, 1, 3,   // first triangle
+        1, 2, 3    // second triangle
+    };  
+
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    VertexArray va;
     VertexBuffer vb(vehicle_vertices, 9 * sizeof(float));
 
-    VertexArray va;
     VertexBufferLayout layout;
     layout.Push<float>(3);
     va.AddBuffer(vb, layout);
+
     IndexBuffer ib(indices, 3);
 
     Shader shader = Shader("res/shaders/Basic.shader");
     shader.Bind();
+    //shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+
+    Renderer renderer;
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -217,12 +223,7 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        //Draw points 0-3 from the currently bound VAO with current in-use shader
-        shader.Bind();
-        va.Bind();
-        ib.Bind();
-        //Draw our vertexes which are bound to the vertex array vao
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+        renderer.Draw(va, ib, shader);
 
         glfwSwapBuffers(window);
     }
