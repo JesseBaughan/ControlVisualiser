@@ -132,7 +132,7 @@ int main(int, char**)
     //IM_ASSERT(font != NULL);
 
     float vehicle_vertices[] = {
-    -0.5f, -0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
         0.0f,  0.5f, 0.0f
     };
@@ -156,9 +156,15 @@ int main(int, char**)
 
     IndexBuffer ib(indices, 3);
 
+    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.5f, 0.1f, 0.0f)); 
+
     Shader shader = Shader("res/shaders/Basic.shader");
     shader.Bind();
-    //shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+    shader.SetUniformMat4f("u_MVP", translation);
+
+    va.UnBind();
+    vb.Unbind();
+    ib.Unbind();
 
     Renderer renderer;
 
@@ -223,6 +229,8 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+        shader.Bind();
+        shader.SetUniformMat4f("u_MVP", translation);
         renderer.Draw(va, ib, shader);
 
         glfwSwapBuffers(window);
