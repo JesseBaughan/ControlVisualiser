@@ -140,18 +140,10 @@ int main(int, char**)
     //IM_ASSERT(font != NULL);
 
     float vehicle_vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f,  0.5f, 0.0f
+        -0.1f, -0.3f, 0.0f,
+        0.1f, -0.3f, 0.0f,
+        0.0f,  0.3f, 0.0f
     };
-
-    /*
-    float vehicle_vertices[] = {
-        -100.5f, -100.5f, 0.0f,
-        100.5f, -100.5f, 0.0f,
-        100.0f,  100.5f, 0.0f
-    };
-    */
 
     unsigned int indices[] = {  // note that we start from 0!
         0, 1, 3,   // first triangle
@@ -240,15 +232,17 @@ int main(int, char**)
 
         shader.Bind();
         float aspect = (float)display_w/display_h;
+        //Ensure our shape is being kept at the right scaling even with window size changing
         glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
         //Rotate 90degrees about z-axis
-        glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
+        glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
         //Translate by some X/Y amount
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)); 
 
-        glm::mat4 transformation = proj * translation * rotate;
+        glm::mat4 transformation = translation * rotate;
+        //Re-scale for window size change to keep proper shape proportions
+        transformation = proj * transformation; 
         shader.SetUniformMat4f("u_MVP", transformation);
-        //shader.SetUniformMat4f("project", proj);
         renderer.Draw(va, ib, shader);
         shader.Unbind();
 
