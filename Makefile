@@ -11,20 +11,23 @@
 #   pacman -S --noconfirm --needed mingw-w64-x86_64-toolchain mingw-w64-x86_64-glfw
 #
 
-#CXX = g++ -std=c++17 
-CXX = clang++ -std=c++17 
+#CXX = g++ 
+CXX = clang++
 
 EXE = example_glfw_opengl3
+IMGUI_DIR = ./libs/imgui
 SOURCES = main.cpp
-SOURCES += imgui_impl_glfw.cpp imgui_impl_opengl3.cpp 
-SOURCES += index_buffer.cpp vertex_buffer.cpp vertex_array.cpp shader.cpp renderer.cpp
 SOURCES += imgui.cpp imgui_demo.cpp imgui_draw.cpp imgui_widgets.cpp
-UNAME_S := $(shell uname -s)
-CXXFLAGS = -Ilibs/ -Ilibs/imgui -Isrc/
-CXXFLAGS += -g -Wall -Wformat
+SOURCES += $(IMGUI_DIR)/backends/imgui_impl_glfw.cpp $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp
+SOURCES += index_buffer.cpp vertex_buffer.cpp vertex_array.cpp shader.cpp renderer.cpp
 OBJ_DIR:=./build/obj/
 APP_DIR:=./build/app/
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(basename $(notdir $(SOURCES)))))
+UNAME_S := $(shell uname -s)
+
+CXXFLAGS = -std=c++11 -Ilibs/ -Isrc/ -I$(IMGUI_DIR)  -I$(IMGUI_DIR)/backends
+CXXFLAGS += -g -Wall -Wformat
+
 ##---------------------------------------------------------------------
 ## OPENGL LOADER
 ##---------------------------------------------------------------------
@@ -79,7 +82,7 @@ endif
 $(OBJ_DIR)%.o:src/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(OBJ_DIR)%.o:libs/imgui/%.cpp
+$(OBJ_DIR)%.o:$(IMGUI_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ_DIR)%.o:libs/gl3w/GL/%.c
@@ -87,6 +90,9 @@ $(OBJ_DIR)%.o:libs/gl3w/GL/%.c
 
 $(OBJ_DIR)%.o:libs/glad/src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJ_DIR)%.o:$(IMGUI_DIR)/backends/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 all: $(EXE)
 	@echo Build complete for $(ECHO_MESSAGE)
