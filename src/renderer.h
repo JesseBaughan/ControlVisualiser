@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/gl3w.h> 
+#include <GL/gl3w.h>
 #include "shader.h"
 #include "vertex_array.h"
 #include "index_buffer.h"
