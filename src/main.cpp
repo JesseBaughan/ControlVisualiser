@@ -6,12 +6,12 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-//#include "renderer.h"
-//#include "vertex_buffer.h"
-//#include "index_buffer.h"
-//#include "vertex_array.h"
-//#include "shader.h"
-//#include "vertex_buffer_layout.h"
+#include "renderer.h"
+#include "vertex_buffer.h"
+#include "index_buffer.h"
+#include "vertex_array.h"
+#include "shader.h"
+#include "vertex_buffer_layout.h"
 
 // About OpenGL function loaders: modern OpenGL doesn't have a standard header file and requires individual function pointers to be loaded manually.
 // Helper libraries are often used for this purpose! Here we are supporting a few common ones: gl3w, glew, glad.
@@ -145,8 +145,7 @@ int main(int, char**)
     bool show_demo_window = true;
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-    /*
+    
     VertexArray va;
     VertexBuffer vb(vehicle_vertices, 9 * sizeof(float));
 
@@ -160,7 +159,6 @@ int main(int, char**)
     shader.Bind();
 
     Renderer renderer;
-    */
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -223,7 +221,6 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        /*
         shader.Bind();
         float aspect = (float)display_w/display_h;
         //Ensure our shape is being kept at the right scaling even with window size changing
@@ -239,7 +236,6 @@ int main(int, char**)
         shader.SetUniformMat4f("u_MVP", transformation);
         renderer.Draw(va, ib, shader);
         shader.Unbind();
-        */
 
         glfwSwapBuffers(window);
     }
