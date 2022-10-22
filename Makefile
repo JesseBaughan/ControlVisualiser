@@ -11,35 +11,36 @@
 #   pacman -S --noconfirm --needed mingw-w64-x86_64-toolchain mingw-w64-x86_64-glfw
 #
 
-#CXX = g++ -std=c++17 
-CXX = clang++ -std=c++17 
+#CXX = g++
+#CXX = clang++
 
 EXE = example_glfw_opengl3
+IMGUI_DIR = ./libs/imgui
 SOURCES = main.cpp
-SOURCES += imgui_impl_glfw.cpp imgui_impl_opengl3.cpp 
+SOURCES += imgui.cpp imgui_demo.cpp imgui_draw.cpp imgui_tables.cpp imgui_widgets.cpp
+SOURCES += $(IMGUI_DIR)/backends/imgui_impl_glfw.cpp $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp
 SOURCES += index_buffer.cpp vertex_buffer.cpp vertex_array.cpp shader.cpp renderer.cpp
-SOURCES += imgui.cpp imgui_demo.cpp imgui_draw.cpp imgui_widgets.cpp
-UNAME_S := $(shell uname -s)
-CXXFLAGS = -Ilibs/ -Ilibs/imgui -Isrc/
-CXXFLAGS += -g -Wall -Wformat
 OBJ_DIR:=./build/obj/
 APP_DIR:=./build/app/
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(basename $(notdir $(SOURCES)))))
-##---------------------------------------------------------------------
-## OPENGL LOADER
-##---------------------------------------------------------------------
+UNAME_S := $(shell uname -s)
+LINUX_GL_LIBS = -lGL
+
+CXXFLAGS = -std=c++11 -Ilibs/ -Isrc/ -I$(IMGUI_DIR)  -I$(IMGUI_DIR)/backends/
+CXXFLAGS += -g -Wall -Wformat
+LIBS =
 
 ## Using OpenGL loader: gl3w [default]
 SOURCES += libs/gl3w/GL/gl3w.c
 CXXFLAGS += -Ilibs/gl3w
 
-## Using OpenGL loader: glew
-## (This assumes a system-wide installation)
-# CXXFLAGS += -lGLEW -DIMGUI_IMPL_OPENGL_LOADER_GLEW
+##---------------------------------------------------------------------
+## OPENGL ES
+##---------------------------------------------------------------------
 
-## Using OpenGL loader: glad
-# SOURCES += ../libs/glad/src/glad.c
-# CXXFLAGS += -I../libs/glad/include -DIMGUI_IMPL_OPENGL_LOADER_GLAD
+## This assumes a GL ES library available in the system, e.g. libGLESv2.so
+# CXXFLAGS += -DIMGUI_IMPL_OPENGL_ES2
+# LINUX_GL_LIBS = -lGLESv2
 
 ##---------------------------------------------------------------------
 ## BUILD FLAGS PER PLATFORM
@@ -47,7 +48,7 @@ CXXFLAGS += -Ilibs/gl3w
 
 ifeq ($(UNAME_S), Linux) #LINUX
 	ECHO_MESSAGE = "Linux"
-	LIBS += -lGL `pkg-config --static --libs glfw3`
+	LIBS += $(LINUX_GL_LIBS) `pkg-config --static --libs glfw3`
 
 	CXXFLAGS += `pkg-config --cflags glfw3`
 	CFLAGS = $(CXXFLAGS)
@@ -56,15 +57,15 @@ endif
 ifeq ($(UNAME_S), Darwin) #APPLE
 	ECHO_MESSAGE = "Mac OS X"
 	LIBS += -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo
-	LIBS += -L/usr/local/lib -L/opt/local/lib
+	LIBS += -L/usr/local/lib -L/opt/local/lib -L/opt/homebrew/lib
 	#LIBS += -lglfw3
 	LIBS += -lglfw
 
-	CXXFLAGS += -I/usr/local/include -I/opt/local/include
+	CXXFLAGS += -I/usr/local/include -I/opt/local/include -I/opt/homebrew/include
 	CFLAGS = $(CXXFLAGS)
 endif
 
-ifeq ($(findstring MINGW,$(UNAME_S)),MINGW)
+ifeq ($(OS), Windows_NT)
 	ECHO_MESSAGE = "MinGW"
 	LIBS += -lglfw3 -lgdi32 -lopengl32 -limm32
 
@@ -79,7 +80,7 @@ endif
 $(OBJ_DIR)%.o:src/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(OBJ_DIR)%.o:libs/imgui/%.cpp
+$(OBJ_DIR)%.o:$(IMGUI_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ_DIR)%.o:libs/gl3w/GL/%.c
@@ -87,6 +88,9 @@ $(OBJ_DIR)%.o:libs/gl3w/GL/%.c
 
 $(OBJ_DIR)%.o:libs/glad/src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJ_DIR)%.o:$(IMGUI_DIR)/backends/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 all: $(EXE)
 	@echo Build complete for $(ECHO_MESSAGE)
