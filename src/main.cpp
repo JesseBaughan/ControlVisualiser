@@ -2,19 +2,17 @@
 #include <iostream>
 #include <math.h>
 
-/*
-#include "renderer.h"
-#include "vertex_buffer.h"
-#include "index_buffer.h"
-#include "vertex_array.h"
-#include "shader.h"
-#include "vertex_buffer_layout.h"
-*/
-
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include <stdio.h>
+
+#include "renderer.h"
+//#include "vertex_buffer.h"
+//#include "index_buffer.h"
+//#include "vertex_array.h"
+//#include "shader.h"
+//#include "vertex_buffer_layout.h"
+
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
 #endif
@@ -30,7 +28,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 
 static void glfw_error_callback(int error, const char* description)
 {
