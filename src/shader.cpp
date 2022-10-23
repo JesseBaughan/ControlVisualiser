@@ -121,9 +121,9 @@ void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
     glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
 }
 
-unsigned int Shader::GetUniformLocation(const std::string& name)
+int Shader::GetUniformLocation(const std::string& name)
 {
-    unsigned int location = glGetUniformLocation(m_RendererID, name.c_str());
+    int location = glGetUniformLocation(m_RendererID, name.c_str());
     if(location == -1)
     {
         std::cout << "Warning: uniform doesn't exist";
