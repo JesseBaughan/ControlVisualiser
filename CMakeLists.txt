@@ -47,17 +47,17 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 # Make sure we get all compiler output
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
 
-#target_link_libraries(${PROJECT_NAME} ${GL_DIR})
-
 target_include_directories(${PROJECT_NAME} PUBLIC ${GL3W_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR}/backends)
 target_include_directories(${PROJECT_NAME} PUBLIC ${GL_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC build/src)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   glfw
-  OpenGL::GL)
+  OpenGL::GL
+  gl_wrapper)
 
 ##---------------------------------------------------------------------
 ## BUILD FLAGS PER PLATFORM
