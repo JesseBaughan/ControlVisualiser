@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(IMGUI_DIR libs/imgui)
 set(GL3W_DIR libs/gl3w)
 set(GL_DIR src/gl_wrapper)
-set(LIBS_DIR libs)
+set(LIBS_DIR libs/)
 
 find_package(glfw3 CONFIG REQUIRED)
 
@@ -36,6 +36,11 @@ set(SOURCES
 # Add in the openGL wrapper library
 add_subdirectory(${GL_DIR})
 
+add_subdirectory(test)
+
+#Add GTest
+add_subdirectory(${LIBS_DIR}/googletest)
+
 # Add all the source files needed to build the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -44,7 +49,6 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${GL3W_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR})
-target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR}/backends)
 target_include_directories(${PROJECT_NAME} PUBLIC ${GL_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC build/src)
