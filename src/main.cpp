@@ -134,7 +134,7 @@ int main(int, char**)
 
     IndexBuffer ib(indices, 3);
 
-    Shader shader = Shader("res/shaders/Basic.shader");
+    Shader shader = Shader("../res/shaders/Basic.shader");
     shader.Bind();
 
     Renderer renderer;
