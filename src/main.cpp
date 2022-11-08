@@ -6,14 +6,12 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-/*
 #include "renderer.h"
 #include "vertex_buffer.h"
 #include "index_buffer.h"
 #include "vertex_array.h"
 #include "shader.h"
 #include "vertex_buffer_layout.h"
-*/
 
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
 #include <GL/gl3w.h>    // Initialize with gl3wInit()
@@ -127,8 +125,6 @@ int main(int, char**)
         0, 1, 3,   // first triangle
     };  
 
-    /*
-
     VertexArray va;
     VertexBuffer vb(vehicle_vertices, 9 * sizeof(float));
 
@@ -142,7 +138,6 @@ int main(int, char**)
     shader.Bind();
 
     Renderer renderer;
-    */
 
     while (!glfwWindowShouldClose(window))
     {
@@ -167,7 +162,6 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        /*
         // Rendering of test triangle
         shader.Bind();
         float aspect = (float)display_w/display_h;
@@ -183,7 +177,6 @@ int main(int, char**)
         shader.SetUniformMat4f("u_MVP", transformation);
         renderer.Draw(va, ib, shader);
         shader.Unbind();
-        */
 
         glfwSwapBuffers(window);
     }
