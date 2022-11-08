@@ -8,15 +8,16 @@ sudo apt-get install libglfw3-dev
 #### GLEW
 sudo apt install libglew-dev  
 ## Building project
-$ cd build
-$ cmake ..
-$ make all
-$ ./ControlVisualiser
+cd build  
+cmake ..  
+make all  
+./ControlVisualiser  
 
-** Single step build process **
-$ cmake --build . --target ControlVisualiser
-
-Replace the target name with ControlVisualiser_tst to just build unit tests
-
-## Running unit tests
-$ ./test/ControlVisualiser_tst
+**Single step build process**  
+cmake --build . --target ControlVisualiser  
+<br/>
+Replace the target name with ControlVisualiser_tst to build unit tests  
+cmake --build . --target ControlVisualiser_tst
+<br/>
+## Running unit tests  
+./test/ControlVisualiser_tst  
