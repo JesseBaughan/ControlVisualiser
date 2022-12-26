@@ -9,6 +9,6 @@ add_executable(${BINARY} ${TEST_SOURCES})
 add_test(NAME ${BINARY} COMMAND ${BINARY})
 
 target_include_directories(${BINARY} PUBLIC build/src)
-target_include_directories(${BINARY} PUBLIC ../src/)
+target_include_directories(${BINARY} PUBLIC ../Engine/src/)
 
 target_link_libraries(${BINARY} PUBLIC gl_wrapper gtest)

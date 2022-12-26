@@ -9,8 +9,10 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(IMGUI_DIR libs/imgui)
 set(GL3W_DIR libs/gl3w)
-set(GL_DIR src/gl_wrapper)
+set(ENGINE_DIR Engine)
+set(GL_DIR ${ENGINE_DIR}/src/gl_wrapper)
 set(LIBS_DIR libs/)
+set(PLATFORM_DIR Platform)
 
 find_package(glfw3 CONFIG REQUIRED)
 
@@ -23,7 +25,7 @@ if(NOT OPENGL_FOUND)
 endif()
 
 set(SOURCES 
-    src/main.cpp
+    ${ENGINE_DIR}/src/main.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
     ${IMGUI_DIR}/imgui_draw.cpp
@@ -31,6 +33,7 @@ set(SOURCES
     ${IMGUI_DIR}/imgui_widgets.cpp
     ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
+    ${PLATFORM_DIR}/Linux/LinuxWindow.cpp
 )
 
 # Add in the openGL wrapper library
@@ -44,6 +47,8 @@ add_subdirectory(${LIBS_DIR}/googletest)
 # Add all the source files needed to build the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+set (CMAKE_CXX_STANDARD 11)
+
 # Make sure we get all compiler output
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
 
@@ -52,6 +57,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${GL_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC build/src)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PLATFORM_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_DIR})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   glfw
