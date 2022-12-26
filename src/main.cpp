@@ -116,9 +116,9 @@ int main(int, char**)
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     float vehicle_vertices[] = {
-        -0.1f, -0.3f, 0.0f,
-        0.1f, -0.3f, 0.0f,
-        0.0f,  0.3f, 0.0f
+        -0.1f, -0.3f, 0.0f, //0
+        0.1f, -0.3f, 0.0f,  //1
+        0.0f,  0.3f, 0.0f   //2
     };
 
     unsigned int indices[] = {  // note that we start from 0!
@@ -162,16 +162,16 @@ int main(int, char**)
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        // Rendering of test triangle
+        //Rendering of test triangle
         shader.Bind();
-        float aspect = (float)display_w/display_h;
-        //Ensure our shape is being kept at the right scaling even with window size changing
-        glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
         //Rotate 90degrees about z-axis
         glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
         //Translate by some X/Y amount
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)); 
         glm::mat4 transformation = translation * rotate;
+        float aspect = (float)display_w/display_h;
+        //Ensure our shape is being kept at the right scaling even with window size changing
+        glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
         //Re-scale for window size change to keep proper shape proportions
         transformation = proj * transformation; 
         shader.SetUniformMat4f("u_MVP", transformation);
