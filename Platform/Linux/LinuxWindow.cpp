@@ -153,22 +153,12 @@ namespace Engine
     {
         glfwPollEvents();
 
-        // Start the Dear ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        ImGui::ShowDemoWindow(&_show_demo_window);
-
-        // Rendering of ImGui
-        ImGui::Render();
+        //*********OPENGL DRAWING***********
         int display_w, display_h;
         glfwGetFramebufferSize(_window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         glClearColor(_clear_color.x * _clear_color.w, _clear_color.y * _clear_color.w, _clear_color.z * _clear_color.w, _clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         //Rendering of test triangle
         _shader->Bind();
@@ -185,6 +175,17 @@ namespace Engine
         _shader->SetUniformMat4f("u_MVP", transformation);
         _renderer->Draw(*_va, *_ib, *_shader);
         _shader->Unbind();
+
+        //*********IMGUI DRAWING*************
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        ImGui::ShowDemoWindow(&_show_demo_window);
+
+        // Rendering of ImGui
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(_window);
     }
