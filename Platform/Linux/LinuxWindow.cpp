@@ -1,8 +1,3 @@
-
-#include "imgui.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
-
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
 #include <GL/gl3w.h>    // Initialize with gl3wInit()
 #elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)
@@ -133,16 +128,7 @@ namespace Engine
         glfwPollEvents();
 
         //*********OPENGL DRAWING***********
-        /*
         // Rendering of ImGui
-        int display_w = 100;
-        int display_h = 100;
-        ImVec4 _clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-        glClearColor(_clear_color.x * _clear_color.w, _clear_color.y * _clear_color.w, _clear_color.z * _clear_color.w, _clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwGetFramebufferSize(_window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        */
         /*
         //Rendering of test triangle
         _shader->Bind();
