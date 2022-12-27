@@ -35,7 +35,7 @@ namespace Engine
         ImGui_ImplOpenGL3_Init(glsl_version);
     }
 
-    void ImGuiRenderer::OnUpdate()
+    void ImGuiRenderer::Begin()
     {
         glfwPollEvents();
 
@@ -45,8 +45,11 @@ namespace Engine
         ImGui::NewFrame();
 
         ImGui::ShowDemoWindow(&_show_demo_window);
+    }
 
-        // Rendering of ImGui
+    void ImGuiRenderer::End()
+    {
         ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 }

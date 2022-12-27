@@ -23,7 +23,8 @@ namespace Engine
         ImGuiRenderer();
         ~ImGuiRenderer();
 
-        void OnUpdate();
+        void Begin();
+        void End();
     private:
         bool _show_demo_window{true};
         void Init();

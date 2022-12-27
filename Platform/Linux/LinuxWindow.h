@@ -30,7 +30,6 @@ namespace Engine
            unsigned int _height{0}; 
            std::string _title; 
 
-           ImVec4 _clear_color;
            Shader *_shader;
            Renderer *_renderer;
            VertexArray *_va;

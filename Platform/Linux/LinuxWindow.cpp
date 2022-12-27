@@ -104,9 +104,6 @@ namespace Engine
             return;
         }
 
-        // Our state
-        _clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
         float vehicle_vertices[] = {
             -0.1f, -0.3f, 0.0f, //0
             0.1f, -0.3f, 0.0f,  //1
@@ -136,15 +133,17 @@ namespace Engine
         glfwPollEvents();
 
         //*********OPENGL DRAWING***********
-        int display_w, display_h;
-        glfwGetFramebufferSize(_window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
+        /*
+        // Rendering of ImGui
+        int display_w = 100;
+        int display_h = 100;
+        ImVec4 _clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
         glClearColor(_clear_color.x * _clear_color.w, _clear_color.y * _clear_color.w, _clear_color.z * _clear_color.w, _clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        //TODO: we need to put this somehere else?? 
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
+        glfwGetFramebufferSize(_window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        */
+        /*
         //Rendering of test triangle
         _shader->Bind();
         //Rotate 90degrees about z-axis
@@ -160,6 +159,7 @@ namespace Engine
         _shader->SetUniformMat4f("u_MVP", transformation);
         _renderer->Draw(*_va, *_ib, *_shader);
         _shader->Unbind();
+        */
 
         glfwSwapBuffers(_window);
     }

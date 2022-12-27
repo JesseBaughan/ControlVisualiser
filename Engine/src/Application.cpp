@@ -27,7 +27,9 @@ namespace Engine
         bool _running = true;
         while (_running)
         {
-            _imgui->OnUpdate();
+            _imgui->Begin();
+            _imgui->End();
+
             _window->OnUpdate();
         }
     }
