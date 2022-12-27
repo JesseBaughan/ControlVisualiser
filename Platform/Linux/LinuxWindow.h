@@ -28,13 +28,6 @@ namespace Engine
            unsigned int _width{0}; 
            unsigned int _height{0}; 
            std::string _title; 
-
-           Shader *_shader;
-           Renderer *_renderer;
-           VertexArray *_va;
-           VertexBuffer *_vb;
-           VertexBufferLayout *_layout;
-           IndexBuffer *_ib;
     };
     
 } // namespace Engine
