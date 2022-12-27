@@ -58,7 +58,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${GL_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC build/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PLATFORM_DIR})
-target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ./SandBox)
 
 

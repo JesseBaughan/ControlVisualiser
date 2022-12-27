@@ -2,7 +2,7 @@
 #include <iostream>
 #include <math.h>
 
-#include "src/ImGui/ImGuiRenderer.h"
+#include "ImGui/ImGuiRenderer.h"
 #include "Application.h"
 
 namespace Engine

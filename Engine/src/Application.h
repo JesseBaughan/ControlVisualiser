@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include "src/Window.h"
-#include "src/ImGui/ImGuiRenderer.h"
+#include "Window.h"
+#include "ImGui/ImGuiRenderer.h"
 
 namespace Engine
 {

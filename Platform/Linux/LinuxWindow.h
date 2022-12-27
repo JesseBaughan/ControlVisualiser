@@ -1,4 +1,4 @@
-#include "src/Window.h"
+#include "Window.h"
 
 #include "renderer.h"
 #include "shader.h"
