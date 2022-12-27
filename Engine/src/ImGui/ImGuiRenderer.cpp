@@ -3,19 +3,20 @@
 #include "backends/imgui_impl_opengl3.h"
 
 #include "ImGuiRenderer.h"
+#include "src/Application.h"
 
 namespace Engine
 {
-    ImGuiRenderer::ImGuiRenderer(GLFWwindow *window)
+    ImGuiRenderer::ImGuiRenderer()
     {
-        Init(window);
+        Init();
     }
 
     ImGuiRenderer::~ImGuiRenderer()
     {
     }
 
-    void ImGuiRenderer::Init(GLFWwindow *window)
+    void ImGuiRenderer::Init()
     {
         const char* glsl_version = "#version 130";
         // Setup Dear ImGui context
@@ -27,6 +28,9 @@ namespace Engine
         ImGui::StyleColorsDark();
 
         // Setup Platform/Renderer backends
+        Application &app = Application::Get();
+        GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
     }

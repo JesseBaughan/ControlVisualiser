@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <iostream>
 #include <math.h>
-#include <memory>
 
-#include "src/Window.h"
 #include "src/ImGui/ImGuiRenderer.h"
 #include "Application.h"
 
 namespace Engine
 {
+    Application* Application::_instance = nullptr;
+
     Application::Application()
     {
-
+		_instance = this;
     }
 
     Application::~Application()
@@ -21,12 +21,14 @@ namespace Engine
 
     void Application::Run()
     {
-        std::unique_ptr<Engine::Window> window = std::unique_ptr<Engine::Window>(Engine::Window::Create());
+        _window = std::unique_ptr<Engine::Window>(Engine::Window::Create());
+        _imgui = std::unique_ptr<Engine::ImGuiRenderer>(new Engine::ImGuiRenderer());
 
         bool _running = true;
         while (_running)
         {
-            window->OnUpdate();
+            _imgui->OnUpdate();
+            _window->OnUpdate();
         }
     }
 }

@@ -60,11 +60,6 @@ namespace Engine
 
     void LinuxWindow::Shutdown()
     {
-        // Cleanup
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
-
         glfwDestroyWindow(_window);
         glfwTerminate();
     }
@@ -109,19 +104,6 @@ namespace Engine
             return;
         }
 
-        const char* glsl_version = "#version 130";
-        // Setup Dear ImGui context
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-        // Setup Dear ImGui style
-        ImGui::StyleColorsDark();
-
-        // Setup Platform/Renderer backends
-        ImGui_ImplGlfw_InitForOpenGL(_window, true);
-        ImGui_ImplOpenGL3_Init(glsl_version);
-
         // Our state
         _clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -160,6 +142,9 @@ namespace Engine
         glClearColor(_clear_color.x * _clear_color.w, _clear_color.y * _clear_color.w, _clear_color.z * _clear_color.w, _clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        //TODO: we need to put this somehere else?? 
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         //Rendering of test triangle
         _shader->Bind();
         //Rotate 90degrees about z-axis
@@ -175,17 +160,6 @@ namespace Engine
         _shader->SetUniformMat4f("u_MVP", transformation);
         _renderer->Draw(*_va, *_ib, *_shader);
         _shader->Unbind();
-
-        //*********IMGUI DRAWING*************
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        ImGui::ShowDemoWindow(&_show_demo_window);
-
-        // Rendering of ImGui
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(_window);
     }

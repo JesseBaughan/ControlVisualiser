@@ -20,12 +20,12 @@ namespace Engine
     class ImGuiRenderer
     {
     public:
-        ImGuiRenderer(GLFWwindow *window);
+        ImGuiRenderer();
         ~ImGuiRenderer();
 
         void OnUpdate();
     private:
-        bool _show_demo_window;
-        void Init(GLFWwindow *window);
+        bool _show_demo_window{true};
+        void Init();
     };
 }

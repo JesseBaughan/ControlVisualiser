@@ -1,5 +1,9 @@
 #pragma once
 
+#include <memory>
+#include "src/Window.h"
+#include "src/ImGui/ImGuiRenderer.h"
+
 namespace Engine
 {
     class Application
@@ -9,6 +13,14 @@ namespace Engine
         virtual ~Application();
 
         void Run();
+
+        static Application& Get() { return *_instance; }
+
+        Window& GetWindow() { return *_window; }
+    private:
+         static Application* _instance;
+         std::unique_ptr<Engine::Window> _window;
+         std::unique_ptr<Engine::ImGuiRenderer> _imgui;
     };
 
     //To be defined in CLIENT

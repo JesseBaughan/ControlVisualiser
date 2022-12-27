@@ -17,8 +17,7 @@ namespace Engine
 
             inline unsigned int GetWidth() const override { return _width; }
             inline unsigned int GetHeight() const override { return _height; }
-
-            inline GLFWwindow* GetWindow() const { return _window; };
+            virtual void* GetNativeWindow() const { return _window; };
 
         private:
             GLFWwindow* _window;
