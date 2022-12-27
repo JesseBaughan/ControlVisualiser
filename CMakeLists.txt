@@ -25,7 +25,8 @@ if(NOT OPENGL_FOUND)
 endif()
 
 set(SOURCES 
-    ${ENGINE_DIR}/src/main.cpp
+    ${ENGINE_DIR}/src/Application.cpp
+    ./SandBox/SandboxApp.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
     ${IMGUI_DIR}/imgui_draw.cpp
@@ -34,6 +35,7 @@ set(SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
     ${PLATFORM_DIR}/Linux/LinuxWindow.cpp
+    ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
 )
 
 # Add in the openGL wrapper library
@@ -47,8 +49,6 @@ add_subdirectory(${LIBS_DIR}/googletest)
 # Add all the source files needed to build the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-set (CMAKE_CXX_STANDARD 11)
-
 # Make sure we get all compiler output
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
 
@@ -59,6 +59,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC build/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PLATFORM_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC ./SandBox)
+
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   glfw
