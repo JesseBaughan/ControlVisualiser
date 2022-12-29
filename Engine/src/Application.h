@@ -9,14 +9,22 @@ namespace Engine
     class Application
     {
     public:
-        Application();
         virtual ~Application();
+
+        //Singletons should not have copy constructor
+        Application(Application& other) = delete;
+
+        //Singletons should not have copy assignment constructor
+        void operator=(const Application&) = delete;
 
         void Run();
 
         static Application& Get() { return *_instance; }
 
         Window& GetWindow() { return *_window; }
+    protected:
+        //Singletons constuctor should be protected to avoid direct construction using new keyword.
+         Application();
     private:
          static Application* _instance;
          std::unique_ptr<Engine::Window> _window;

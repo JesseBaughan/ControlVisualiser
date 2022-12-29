@@ -12,6 +12,10 @@ namespace Engine
 
     Application::Application()
     {
+        if(_instance != nullptr)
+        {
+            return;
+        }
 		_instance = this;
     }
 
