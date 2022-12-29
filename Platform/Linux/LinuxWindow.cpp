@@ -22,11 +22,6 @@ namespace Engine
         fprintf(stderr, "Glfw Error %d: %s\n", error, description);
     }
 
-    Window* Window::Create(const WindowProperties &props)
-    {
-        return new LinuxWindow(props);
-    }
-
     LinuxWindow::LinuxWindow(const WindowProperties &props)
     {
         Init(props);

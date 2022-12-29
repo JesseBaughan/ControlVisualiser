@@ -2,6 +2,8 @@
 
 #include <string>
 
+//This class utilises the "Factory Method" design pattern.
+
 namespace Engine
 {
     struct WindowProperties
@@ -22,7 +24,7 @@ namespace Engine
     class Window
     {
     public:
-        virtual ~Window() {};
+        virtual ~Window() = default;
 
         virtual void OnUpdate() = 0;
 

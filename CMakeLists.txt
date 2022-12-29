@@ -27,6 +27,7 @@ endif()
 set(SOURCES 
     ${ENGINE_DIR}/src/Application.cpp
     ${ENGINE_DIR}/src/Glyph/Triangle.cpp
+    ${ENGINE_DIR}/src/Window.cpp
     ./SandBox/SandboxApp.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
