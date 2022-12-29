@@ -1,38 +1,29 @@
 #include "Triangle.h"
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 namespace Engine
 {
     TriangleGlyph::TriangleGlyph()
     {
-        /*
-        float vehicle_vertices[] = {
-            -0.1f, -0.3f, 0.0f, //0
-            0.1f, -0.3f, 0.0f,  //1
-            0.0f,  0.3f, 0.0f   //2
-        };
-
-        unsigned int indices[] = {  // note that we start from 0!
-            0, 1, 3,   // first triangle
-        };  
-
-        _va = new VertexArray();
         _vb = new VertexBuffer(vehicle_vertices, 9 * sizeof(float));
 
-        _layout = new VertexBufferLayout();
-        _layout->Push<float>(3);
-        _va->AddBuffer(*_vb, *_layout);
+        _layout.Push<float>(3);
+        _va.AddBuffer(*_vb, _layout);
 
         _ib = new IndexBuffer(indices, 3);
         _shader = new Shader("../res/shaders/Basic.shader");
         _shader->Bind();
-
-        _renderer = new Renderer();
-        */
     }
 
     TriangleGlyph::~TriangleGlyph()
     {
+        delete _vb;
+        delete _ib;
+        delete _shader;
     }
 
     void TriangleGlyph::Draw(Window* window) 
@@ -48,7 +39,6 @@ namespace Engine
 
         //*********OPENGL DRAWING***********
         // Rendering of ImGui
-        /*
         //Rendering of test triangle
         _shader->Bind();
         //Rotate 90degrees about z-axis
@@ -62,9 +52,8 @@ namespace Engine
         //Re-scale for window size change to keep proper shape proportions
         transformation = proj * transformation; 
         _shader->SetUniformMat4f("u_MVP", transformation);
-        _renderer->Draw(*_va, *_ib, *_shader);
+        _renderer.Draw(_va, *_ib, *_shader);
         _shader->Unbind();
-        */
     }
 
     void TriangleGlyph::Insert(Glyph* glyph, int id)

@@ -19,14 +19,22 @@ namespace Engine
         virtual void Remove(Glyph* glyph) override;
 
     private:
-    /*
+            float vehicle_vertices[9] = {
+                -0.1f, -0.3f, 0.0f, //0
+                0.1f, -0.3f, 0.0f,  //1
+                0.0f,  0.3f, 0.0f   //2
+            };
+
+            unsigned int indices[3] = {  // note that we start from 0!
+                0, 1, 3,   // first triangle
+            };  
+
+           VertexArray _va;
+           VertexBufferLayout _layout;
            Shader *_shader;
-           Renderer *_renderer;
-           VertexArray *_va;
            VertexBuffer *_vb;
-           VertexBufferLayout *_layout;
            IndexBuffer *_ib;
-           */
+           Renderer _renderer;
     };
 
 }
