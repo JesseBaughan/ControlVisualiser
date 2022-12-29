@@ -17,6 +17,9 @@ namespace Engine
             return;
         }
 		_instance = this;
+
+        _window = std::unique_ptr<Engine::Window>(Engine::Window::Create());
+        _imgui = std::unique_ptr<Engine::ImGuiRenderer>(new Engine::ImGuiRenderer());
     }
 
     Application::~Application()
@@ -26,8 +29,6 @@ namespace Engine
 
     void Application::Run()
     {
-        _window = std::unique_ptr<Engine::Window>(Engine::Window::Create());
-        _imgui = std::unique_ptr<Engine::ImGuiRenderer>(new Engine::ImGuiRenderer());
         Engine::TriangleGlyph glyph = Engine::TriangleGlyph();
 
         bool _running = true;
