@@ -28,7 +28,6 @@ namespace Engine
 
     void TriangleGlyph::Draw(Window* window) 
     {
-        // Rendering of ImGui
         int display_w = 0;
         int display_h = 0;
         glClearColor(0.45f,  0.55f, 0.6f, 1.0f);
@@ -38,7 +37,6 @@ namespace Engine
         glViewport(0, 0, display_w, display_h);
 
         //*********OPENGL DRAWING***********
-        // Rendering of ImGui
         //Rendering of test triangle
         _shader->Bind();
         //Rotate 90degrees about z-axis
