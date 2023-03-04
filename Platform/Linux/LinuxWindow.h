@@ -2,6 +2,8 @@
 #include "renderer.h"
 #include "shader.h"
 
+#include "../Platform/OpenGL/OpenGLContext.h"
+
 #include "backends/imgui_impl_glfw.h"
 
 namespace Engine
@@ -20,14 +22,18 @@ namespace Engine
 
         private:
             GLFWwindow* _window;
+            GraphicsContext* _context;
+
             virtual void Init(const WindowProperties &props);
             virtual void Shutdown();
+            void SetVSync(bool enabled);
 
             bool _show_demo_window{true};
+            bool _GLFWwindowInitialised{false};
         
-           unsigned int _width{0}; 
-           unsigned int _height{0}; 
-           std::string _title; 
+            unsigned int _width{0}; 
+            unsigned int _height{0}; 
+            std::string _title; 
     };
     
 } // namespace Engine
