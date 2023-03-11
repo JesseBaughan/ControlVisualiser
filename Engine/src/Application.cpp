@@ -4,7 +4,7 @@
 
 #include "ImGui/ImGuiRenderer.h"
 #include "Application.h"
-#include "Glyph/Triangle.h"
+//#include "Glyph/Triangle.h"
 
 namespace Engine
 {
@@ -29,7 +29,7 @@ namespace Engine
 
     void Application::Run()
     {
-        Engine::TriangleGlyph glyph = Engine::TriangleGlyph();
+        //Engine::TriangleGlyph glyph = Engine::TriangleGlyph();
 
         bool _running = true;
         while (_running)
@@ -38,7 +38,7 @@ namespace Engine
             glClear(GL_COLOR_BUFFER_BIT);
 
             _imgui->Begin();
-            glyph.Draw(_window.get());
+            //glyph.Draw(_window.get());
             _imgui->End();
 
             _window->OnUpdate();

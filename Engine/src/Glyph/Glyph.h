@@ -8,7 +8,7 @@ namespace Engine
     {
     public:
         Glyph() {};
-        virtual ~Glyph() {};
+        virtual ~Glyph() = 0;
 
         virtual void Draw(Window* window) = 0;
         //virtual void Bounds(Rect& rect);

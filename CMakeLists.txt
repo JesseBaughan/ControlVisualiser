@@ -10,7 +10,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(IMGUI_DIR libs/imgui)
 set(GL3W_DIR libs/gl3w)
 set(ENGINE_DIR Engine)
-set(GL_DIR ${ENGINE_DIR}/src/gl_wrapper)
 set(LIBS_DIR libs/)
 set(PLATFORM_DIR Platform)
 
@@ -26,8 +25,12 @@ endif()
 
 set(SOURCES 
     ${ENGINE_DIR}/src/Application.cpp
-    ${ENGINE_DIR}/src/Glyph/Triangle.cpp
+    #${ENGINE_DIR}/src/Glyph/Triangle.cpp
     ${ENGINE_DIR}/src/Window.cpp
+    ${ENGINE_DIR}/src/Renderer/Renderer.cpp
+    ${ENGINE_DIR}/src/Renderer/Buffer.cpp
+    ${ENGINE_DIR}/src/Renderer/shader.cpp
+    ${ENGINE_DIR}/src/Renderer/vertex_array.cpp
     ./SandBox/SandboxApp.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
@@ -38,11 +41,10 @@ set(SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
     ${PLATFORM_DIR}/Linux/LinuxWindow.cpp
     ${PLATFORM_DIR}/OpenGL/OpenGLContext.cpp
+    ${PLATFORM_DIR}/OpenGL/OpenGLBuffer.cpp
+    ${PLATFORM_DIR}/OpenGL/OpenGLRenderer.cpp
     ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
 )
-
-# Add in the openGL wrapper library
-add_subdirectory(${GL_DIR})
 
 add_subdirectory(test)
 
@@ -57,7 +59,6 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${GL3W_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR})
-target_include_directories(${PROJECT_NAME} PUBLIC ${GL_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC build/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PLATFORM_DIR})
@@ -66,8 +67,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC ./SandBox)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   glfw
-  OpenGL::GL
-  gl_wrapper)
+  OpenGL::GL)
 
 ##---------------------------------------------------------------------
 ## BUILD FLAGS PER PLATFORM
