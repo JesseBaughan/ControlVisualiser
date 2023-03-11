@@ -31,7 +31,7 @@ namespace Engine
 
     void OpenGLContext::SwapBuffers()
     {
-        glfwPollEvents();
+        //glfwPollEvents();
         glfwSwapBuffers(_windowHandle);
     }
 
