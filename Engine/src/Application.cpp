@@ -34,7 +34,7 @@ namespace Engine
         bool _running = true;
         while (_running)
         {
-            glClearColor(0.45f,  0.55f, 0.6f, 1.0f);
+            glClearColor(0.1f,  0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             _imgui->Begin();

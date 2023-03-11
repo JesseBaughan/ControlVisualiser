@@ -16,7 +16,6 @@ namespace Engine
 
         _ib = new IndexBuffer(indices, 3);
         _shader = new Shader("../res/shaders/Basic.shader");
-        _shader->Bind();
     }
 
     TriangleGlyph::~TriangleGlyph()
