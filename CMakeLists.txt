@@ -37,6 +37,7 @@ set(SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
     ${PLATFORM_DIR}/Linux/LinuxWindow.cpp
+    ${PLATFORM_DIR}/OpenGL/OpenGLContext.cpp
     ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
 )
 
@@ -62,7 +63,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC build/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PLATFORM_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ./SandBox)
-
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   glfw

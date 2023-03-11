@@ -28,15 +28,6 @@ namespace Engine
 
     void TriangleGlyph::Draw(Window* window) 
     {
-        int display_w = 0;
-        int display_h = 0;
-        glClearColor(0.45f,  0.55f, 0.6f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        GLFWwindow* _window = static_cast<GLFWwindow*>(window->GetNativeWindow());
-        glfwGetFramebufferSize(_window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-
-        //*********OPENGL DRAWING***********
         //Rendering of test triangle
         _shader->Bind();
         //Rotate 90degrees about z-axis
@@ -44,7 +35,7 @@ namespace Engine
         //Translate by some X/Y amount
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)); 
         glm::mat4 transformation = translation * rotate;
-        float aspect = (float)display_w/display_h;
+        float aspect = window->GetWidth()/window->GetHeight();
         //Ensure our shape is being kept at the right scaling even with window size changing
         glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
         //Re-scale for window size change to keep proper shape proportions

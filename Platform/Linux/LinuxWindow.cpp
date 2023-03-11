@@ -1,17 +1,3 @@
-#if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
-#include <GL/gl3w.h>    // Initialize with gl3wInit()
-#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)
-#include <GL/glew.h>    // Initialize with glewInit()
-#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)
-#include <glad/glad.h>  // Initialize with gladLoadGL()
-#else
-#include IMGUI_IMPL_OPENGL_LOADER_CUSTOM
-#endif
-
-#if defined(IMGUI_IMPL_OPENGL_ES2)
-#include <GLES2/gl2.h>
-#endif
-#include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
 #include "LinuxWindow.h"
 
@@ -40,49 +26,47 @@ namespace Engine
 
     void LinuxWindow::Init(const WindowProperties &props)
     {
+        //TODO: put this is a struct that is for storing this type of window data.
         _width = props.Width;
         _height = props.Height;
         _title = props.Title;
 
-        // Setup window
-        glfwSetErrorCallback(glfw_error_callback);
-        if (!glfwInit())
-            return;
-
-        // GL 3.0 + GLSL 130
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+        if(!_GLFWwindowInitialised)
+        {
+            int success = glfwInit();
+            //TODO: output something to tell us if successful.
+            glfwSetErrorCallback(glfw_error_callback);
+            _GLFWwindowInitialised = true;
+        }
 
         // Create window with graphics context
+        //TODO: use the window struct data to set the window size rather than hardcoded values.
         _window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
         if (_window == NULL)
         {
             return;
         }
-        glfwMakeContextCurrent(_window);
-        glfwSwapInterval(1); // Enable vsync
 
-        // Initialize OpenGL loader
-    #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
-        bool err = gl3wInit() != 0;
-    #elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)
-        bool err = glewInit() != GLEW_OK;
-    #elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)
-        bool err = gladLoadGL() == 0;
-    #else
-        bool err = false; // If you use IMGUI_IMPL_OPENGL_LOADER_CUSTOM, your loader is likely to requires some form of initialization.
-    #endif
-        if (err)
-        {
-            fprintf(stderr, "Failed to initialize OpenGL loader!\n");
-            return;
-        }
+        _context = new OpenGLContext(_window);
+        _context->Init();
+
+        SetVSync(true);
     }
 
     void LinuxWindow::OnUpdate()
     {
-        glfwPollEvents();
+        _context->SwapBuffers();
+    }
 
-        glfwSwapBuffers(_window);
+    void LinuxWindow::SetVSync(bool enabled)
+    {
+        if(enabled)
+        {
+            glfwSwapInterval(1); 
+        }
+        else
+        {
+            glfwSwapInterval(0); 
+        }
     }
 }
