@@ -22,7 +22,7 @@ namespace Engine
     class OpenGLIndexBuffer : public IndexBuffer
     {
     public:
-        OpenGLIndexBuffer(float* vertices, uint32_t count);
+        OpenGLIndexBuffer(uint32_t* vertices, uint32_t count);
         ~OpenGLIndexBuffer();
 
         void Bind() override;

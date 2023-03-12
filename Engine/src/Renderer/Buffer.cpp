@@ -21,7 +21,7 @@ namespace Engine
         return nullptr;
     }
 
-    IndexBuffer* IndexBuffer::Create(float* indices, unsigned int size)
+    IndexBuffer* IndexBuffer::Create(uint32_t* indices, unsigned int size)
     {
         switch(Renderer::GetAPI())
         {

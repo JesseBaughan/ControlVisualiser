@@ -28,13 +28,13 @@ namespace Engine
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    OpenGLIndexBuffer::OpenGLIndexBuffer(float* data, unsigned int count)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* data, unsigned int count)
         : _count(count) 
     {
         glGenBuffers(1, &_rendererID);
         //Bind our vertex buffer array to GL_ARRAY_BUFFER - this is now active
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _rendererID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW); 
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_STATIC_DRAW); 
     }
 
     OpenGLIndexBuffer::~OpenGLIndexBuffer()

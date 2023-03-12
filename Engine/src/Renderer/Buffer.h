@@ -45,9 +45,9 @@ namespace Engine
         {
         }
 
-        uint32_t GetComponentCount(ShaderDataType type) const
+        uint32_t GetComponentCount() const
         {
-            switch (type)
+            switch (Type)
             {
                 case ShaderDataType::Float3: return 3;
             }
@@ -100,7 +100,7 @@ namespace Engine
         virtual void Bind() {};
         virtual void Unbind() {};
 
-        static IndexBuffer* Create(float* data, unsigned int count);
+        static IndexBuffer* Create(uint32_t* data, unsigned int count);
         inline unsigned int GetCount() const { return m_Count; };
 
     private:
