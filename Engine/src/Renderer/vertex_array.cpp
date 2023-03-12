@@ -1,5 +1,5 @@
+#include "Buffer.h"
 #include "vertex_array.h"
-#include "vertex_buffer_layout.h"
 
 VertexArray::VertexArray()
 {
@@ -11,7 +11,7 @@ VertexArray::~VertexArray()
     glDeleteVertexArrays(1, &m_RendererID);
 }
 
-void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
+void VertexArray::AddBuffer(const VertexBuffer& vb, const BufferLayout& layout)
 {
     Bind();
     vb.Bind();

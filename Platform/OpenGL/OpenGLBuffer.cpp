@@ -1,4 +1,4 @@
-#include "Renderer"
+#include "OpenGLBuffer.h"
 
 namespace Engine
 {

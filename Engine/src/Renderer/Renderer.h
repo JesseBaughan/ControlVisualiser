@@ -4,7 +4,6 @@
 #include "Buffer.h"
 #include "shader.h"
 #include "vertex_array.h"
-#include "vertex_buffer_layout.h"
 
 namespace Engine 
 {

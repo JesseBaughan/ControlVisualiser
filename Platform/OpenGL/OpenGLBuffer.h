@@ -1,4 +1,4 @@
-#include "../../Engine/src/Renderer/Renderer.h"
+#include "../../Engine/src/Renderer/Buffer.h"
 
 namespace Engine
 {
@@ -11,8 +11,12 @@ namespace Engine
         void Bind() override;
         void Unbind() override;
 
+        virtual const BufferLayout& GetLayout() const override { return _layout; }
+        virtual void SetLayout(const BufferLayout& layout) override { _layout = layout; }
+
     private:
         unsigned int _rendererID;
+        BufferLayout _layout;
     }; 
 
     class OpenGLIndexBuffer : public IndexBuffer
