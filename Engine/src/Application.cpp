@@ -46,18 +46,17 @@ namespace Engine
 
         BufferLayout layout = { {ShaderDataType::Float3, "a_Position"} };
 
-        const auto&  elements = layout.GetElements();
-        for(unsigned int i = 0; i < elements.size(); i++)
+        uint32_t index = 0;
+        for(auto& element: layout.GetElements())
         {
-            const auto& element = elements[i];
-            //Vertex 0 (first argument) will use vertex at GL_ARRAY_BUFFER location
-            //which was set to vbo location previously
-            glEnableVertexAttribArray(i);
-            glVertexAttribPointer(i, 
+            glEnableVertexAttribArray(index);
+            glVertexAttribPointer(index, 
                 element.GetComponentCount(), GL_FLOAT, 
                 element.Normalised ? GL_TRUE : GL_FALSE, 
                 layout.GetStride(), 
                 (const void*)element.Offset);
+
+            index++;
         }
         
         uint32_t indices[3] = {  // note that we start from 0!
