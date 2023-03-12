@@ -65,8 +65,33 @@ namespace Engine
         };  
 
         _ib.reset(IndexBuffer::Create(indices, 3));
+        
+        std::string vertexSource = R"(
+            #version 330
 
-        _shader.reset(new Shader("Basic.shader"));
+            in vec3 vp;
+
+            uniform mat4 u_MVP;
+
+            void main() 
+            {
+            gl_Position = u_MVP * vec4(vp, 1.0);
+            };
+        )";
+
+        std::string fragmentSource = R"(
+            #version 330
+
+            out vec4 frag_colour;
+
+            void main() 
+            {
+            frag_colour = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+            };
+        )";
+
+        //_shader.reset(new Shader("Basic.shader"));
+        _shader.reset(new Shader(vertexSource, fragmentSource));
 
         bool _running = true;
         while (_running)
@@ -76,7 +101,6 @@ namespace Engine
 
             _imgui->Begin();
 
-            /*
             //Rendering of test triangle
             _shader->Bind();
             //Rotate 90degrees about z-axis
@@ -91,13 +115,10 @@ namespace Engine
             //transformation = proj * transformation; 
             _shader->SetUniformMat4f("u_MVP", transformation);
 
-            _shader->Bind();
             glBindVertexArray(m_RendererID);
             _ib->Bind();
             glDrawElements(GL_TRIANGLES, _ib->GetCount(), GL_UNSIGNED_INT, 0);
-
             _shader->Unbind();
-            */
 
             _imgui->End();
 
