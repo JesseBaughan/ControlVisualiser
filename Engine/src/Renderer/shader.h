@@ -28,6 +28,6 @@ private:
     static unsigned int CompileShader(unsigned int type, const std::string& source);
     int GetUniformLocation(const std::string& name);
 
-    std::string m_filePath;
     unsigned int m_RendererID;
+    std::string m_filePath;
 };
