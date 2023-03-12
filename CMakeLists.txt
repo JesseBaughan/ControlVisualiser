@@ -30,7 +30,7 @@ set(SOURCES
     ${ENGINE_DIR}/src/Renderer/Renderer.cpp
     ${ENGINE_DIR}/src/Renderer/Buffer.cpp
     ${ENGINE_DIR}/src/Renderer/shader.cpp
-    ${ENGINE_DIR}/src/Renderer/vertex_array.cpp
+    #${ENGINE_DIR}/src/Renderer/vertex_array.cpp
     ./SandBox/SandboxApp.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp

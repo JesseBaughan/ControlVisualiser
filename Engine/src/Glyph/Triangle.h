@@ -29,7 +29,7 @@ namespace Engine
         };  
 
         VertexArray _va;
-        VertexBufferLayout _layout;
+        //VertexBufferLayout _layout;
         std::unique_ptr<Shader> _shader;
         std::unique_ptr<VertexBuffer> _vb;
         std::unique_ptr<IndexBuffer> _ib;

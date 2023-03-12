@@ -5,6 +5,9 @@
 #include "ImGui/ImGuiRenderer.h"
 #include "Application.h"
 //#include "Glyph/Triangle.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Engine
 {
@@ -29,7 +32,37 @@ namespace Engine
 
     void Application::Run()
     {
-        //Engine::TriangleGlyph glyph = Engine::TriangleGlyph();
+        unsigned int m_RendererID;
+        glGenVertexArrays(1, &m_RendererID);
+        glBindVertexArray(m_RendererID);
+
+        float vehicle_vertices[9] = {
+            -0.1f, -0.3f, 0.0f, //0
+            0.1f, -0.3f, 0.0f,  //1
+            0.0f,  0.3f, 0.0f   //2
+        };
+
+        float indices[3] = {  // note that we start from 0!
+            0.0, 1.0, 3.0,   // first triangle
+        };  
+        
+        _vb.reset(VertexBuffer::Create(vehicle_vertices, 9 * sizeof(float)));
+
+        BufferLayout layout = { {ShaderDataType::Float3, "a_Position"} };
+
+        const auto&  elements = layout.GetElements();
+        for(unsigned int i = 0; i < elements.size(); i++)
+        {
+            const auto& element = elements[i];
+            //Vertex 0 (first argument) will use vertex at GL_ARRAY_BUFFER location
+            //which was set to vbo location previously
+            glEnableVertexAttribArray(i);
+            glVertexAttribPointer(i, element.GetComponentCount(ShaderDataType::Float3), GL_FLOAT, 
+                                element.Normalised ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.Offset);
+        }
+        
+        _ib.reset(IndexBuffer::Create(indices, 3));
+        _shader.reset(new Shader("Basic.shader"));
 
         bool _running = true;
         while (_running)
@@ -38,7 +71,28 @@ namespace Engine
             glClear(GL_COLOR_BUFFER_BIT);
 
             _imgui->Begin();
-            //glyph.Draw(_window.get());
+
+            //Rendering of test triangle
+            _shader->Bind();
+            //Rotate 90degrees about z-axis
+            glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f)); 
+            //Translate by some X/Y amount
+            glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)); 
+            glm::mat4 transformation = translation * rotate;
+            //float aspect = window->GetWidth()/window->GetHeight();
+            //Ensure our shape is being kept at the right scaling even with window size changing
+            //glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
+            //Re-scale for window size change to keep proper shape proportions
+            //transformation = proj * transformation; 
+            _shader->SetUniformMat4f("u_MVP", transformation);
+
+            _shader->Bind();
+            glBindVertexArray(m_RendererID);
+            _ib->Bind();
+            glDrawElements(GL_TRIANGLES, _ib->GetCount(), GL_UNSIGNED_INT, 0);
+
+            _shader->Unbind();
+
             _imgui->End();
 
             _window->OnUpdate();

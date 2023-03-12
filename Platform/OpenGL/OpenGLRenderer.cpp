@@ -2,6 +2,7 @@
 
 namespace Engine
 {
+    /*
     void OpenGLRenderer::Draw(VertexArray& va, IndexBuffer& ib, Shader& shader) const
     {
         shader.Bind();
@@ -14,4 +15,5 @@ namespace Engine
     {
         glClear(GL_COLOR_BUFFER_BIT);
     }
+    */
 }

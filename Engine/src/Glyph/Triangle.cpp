@@ -11,8 +11,8 @@ namespace Engine
     {
         _vb.reset(VertexBuffer::Create(vehicle_vertices, 9 * sizeof(float)));
 
-        _layout.Push<float>(3);
-        _va.AddBuffer(_vb.get(), _layout);
+        BufferLayout layout = { ShaderDataType::Float3, "a_Position" };
+        //_va.AddBuffer(_vb.get(), _layout);
 
         _ib.reset(IndexBuffer::Create(indices, 3));
         _shader.reset(new Shader("../res/shaders/Basic.shader"));
