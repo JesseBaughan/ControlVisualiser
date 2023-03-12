@@ -116,8 +116,10 @@ namespace Engine
             _shader->SetUniformMat4f("u_MVP", transformation);
 
             glBindVertexArray(m_RendererID);
-            _ib->Bind();
+            uint32_t count = _ib->GetCount();
             glDrawElements(GL_TRIANGLES, _ib->GetCount(), GL_UNSIGNED_INT, 0);
+
+            _ib->Bind();
             _shader->Unbind();
 
             _imgui->End();

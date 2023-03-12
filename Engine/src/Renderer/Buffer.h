@@ -97,15 +97,11 @@ namespace Engine
     public:
         virtual ~IndexBuffer() {}
 
-        virtual void Bind() {};
-        virtual void Unbind() {};
+        virtual void Bind() = 0;
+        virtual void Unbind() = 0;
 
         static IndexBuffer* Create(uint32_t* data, unsigned int count);
-        inline unsigned int GetCount() const { return m_Count; };
-
-    private:
-        unsigned int m_RendererID;
-        unsigned int m_Count;
+        virtual int GetCount() const = 0;
     }; 
 
     class VertexBuffer
@@ -113,15 +109,13 @@ namespace Engine
     public:
         virtual ~VertexBuffer() {}
 
-        virtual void Bind() {};
-        virtual void Unbind() {};
+        virtual void Bind() = 0;
+        virtual void Unbind() = 0;
 
         virtual void SetLayout(const BufferLayout& layout) = 0;
         virtual const BufferLayout& GetLayout() const = 0;
 
         static VertexBuffer* Create(float* data, unsigned int count);
-    private:
-        unsigned int m_RendererID;
     };
 
 } 

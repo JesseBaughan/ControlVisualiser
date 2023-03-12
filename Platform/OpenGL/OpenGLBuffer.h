@@ -28,8 +28,7 @@ namespace Engine
         void Bind() override;
         void Unbind() override;
 
-        inline unsigned int GetCount() const { return _count; };
-
+        virtual int GetCount() const override { return _count; }
     private:
         unsigned int _rendererID;
         unsigned int _count;

@@ -38,6 +38,6 @@
 		"utility": "cpp",
 		"memory": "cpp"
 	},
-	"cmake.sourceDirectory": "${workspaceFolder}/libs/glm",
+	"cmake.sourceDirectory": "${workspaceFolder}",
 	"cmake.configureOnOpen": false
 }
