@@ -63,8 +63,29 @@ namespace Engine
             0, 1, 3,   // first triangle
         };  
 
+        std::string vertexSource = R"(
+            #version 330
+            in vec3 vp;
+            uniform mat4 u_MVP;
+            void main() 
+            {
+            gl_Position = u_MVP * vec4(vp, 1.0);
+            };
+        )";
+
+        std::string fragmentSource = R"(
+            #version 330
+            out vec4 frag_colour;
+            void main() 
+            {
+            frag_colour = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+            };
+        )";
+
         _ib.reset(IndexBuffer::Create(indices, 3));
-        _shader.reset(new Shader("Basic.shader"));
+
+        //_shader.reset(new Shader("Basic.shader"));
+        _shader.reset(new Shader(vertexSource, fragmentSource));
 
         bool _running = true;
         while (_running)
@@ -85,7 +106,7 @@ namespace Engine
             //Ensure our shape is being kept at the right scaling even with window size changing
             //glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
             //Re-scale for window size change to keep proper shape proportions
-            //transformation = proj * transformation; 
+            transformation = transformation; 
             _shader->SetUniformMat4f("u_MVP", transformation);
 
             glBindVertexArray(m_RendererID);
