@@ -1,9 +1,10 @@
 #pragma once
 
-#include <memory>
 #include "Window.h"
 #include "ImGui/ImGuiRenderer.h"
-#include "Renderer/Renderer.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/Buffer.h"
+#include "Renderer/shader.h"
 
 namespace Engine
 {
@@ -31,9 +32,10 @@ namespace Engine
         std::unique_ptr<Engine::Window> _window;
         std::unique_ptr<Engine::ImGuiRenderer> _imgui;
 
-        std::unique_ptr<Shader> _shader;
-        std::unique_ptr<VertexBuffer> _vb;
-        std::unique_ptr<IndexBuffer> _ib;
+        std::shared_ptr<Shader> _shader;
+        std::shared_ptr<VertexArray> _va;
+        std::shared_ptr<VertexBuffer> _vb;
+        std::shared_ptr<IndexBuffer> _ib;
     };
 
     //To be defined in CLIENT
