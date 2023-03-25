@@ -36,18 +36,23 @@ namespace Engine
         glGenVertexArrays(1, &m_RendererID);
         glBindVertexArray(m_RendererID);
 
-        float vehicle_vertices[9] = {
-            -0.1f, -0.3f, 0.0f, //0
-            0.1f, -0.3f, 0.0f,  //1
-            0.0f,  0.3f, 0.0f   //2
+        float vehicle_vertices[3 * 7] = {
+            -0.1f, -0.3f, 0.0f, 1.0f, 0.8f, 0.2f, 1.0f,
+            0.1f, -0.3f, 0.0f, 1.0f, 0.8f, 0.2f, 1.0f,
+            0.0f,  0.3f, 0.0f, 1.0f, 0.8f, 0.2f, 1.0f
         };
         
-        _vb.reset(VertexBuffer::Create(vehicle_vertices, 9 * sizeof(float)));
+        _vb.reset(VertexBuffer::Create(vehicle_vertices, sizeof(vehicle_vertices)));
 
-        BufferLayout layout = { {ShaderDataType::Float3, "a_Position"} };
+        {
+            BufferLayout layout = { {ShaderDataType::Float3, "a_Position"},
+                                    {ShaderDataType::Float4, "a_Colour"}};
+            _vb->SetLayout(layout);
+        }
 
         uint32_t index = 0;
-        for(auto& element: layout.GetElements())
+        const auto &layout = _vb->GetLayout();
+        for(auto& element: layout)
         {
             glEnableVertexAttribArray(index);
             glVertexAttribPointer(index, 
@@ -65,20 +70,33 @@ namespace Engine
 
         std::string vertexSource = R"(
             #version 330
-            in vec3 vp;
-            uniform mat4 u_MVP;
+
+            layout(location = 0) in vec3 a_Position;
+            layout(location = 1) in vec4 a_Colour;
+
+            out vec3 v_Position;
+            out vec4 v_Colour;
+
             void main() 
             {
-            gl_Position = u_MVP * vec4(vp, 1.0);
+                v_Position = a_Position;
+                v_Colour = a_Colour;
+                gl_Position = vec4(a_Position, 1.0);
             };
         )";
 
         std::string fragmentSource = R"(
             #version 330
-            out vec4 frag_colour;
+
+            layout(location = 0) out vec4 colour;
+
+            in vec3 v_Position;
+            in vec4 v_Colour;
+
             void main() 
             {
-            frag_colour = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+                colour = vec4(v_Position * 0.5 + 0.5 , 1.0f);
+                colour = v_Colour;
             };
         )";
 
@@ -107,7 +125,7 @@ namespace Engine
             //glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
             //Re-scale for window size change to keep proper shape proportions
             transformation = transformation; 
-            _shader->SetUniformMat4f("u_MVP", transformation);
+            //_shader->SetUniformMat4f("u_MVP", transformation);
 
             glBindVertexArray(m_RendererID);
             glDrawElements(GL_TRIANGLES, _ib->GetCount(), GL_UNSIGNED_INT, 0);
