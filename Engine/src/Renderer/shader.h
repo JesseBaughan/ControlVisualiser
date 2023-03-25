@@ -12,7 +12,7 @@ struct ShaderProgramSource
 class Shader
 {
 public:
-    Shader(const std::string& filepath);
+    Shader(const std::string& vertexSource, const std::string& fragmentSource);
     ~Shader();
 
     void Bind() const;
@@ -28,6 +28,6 @@ private:
     static unsigned int CompileShader(unsigned int type, const std::string& source);
     int GetUniformLocation(const std::string& name);
 
-    std::string m_filePath;
     unsigned int m_RendererID;
+    std::string m_filePath;
 };

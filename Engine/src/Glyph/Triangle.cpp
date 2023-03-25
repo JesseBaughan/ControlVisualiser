@@ -9,20 +9,13 @@ namespace Engine
 {
     TriangleGlyph::TriangleGlyph()
     {
-        _vb = new VertexBuffer(vehicle_vertices, 9 * sizeof(float));
+        _vb.reset(VertexBuffer::Create(vehicle_vertices, 9 * sizeof(float)));
 
-        _layout.Push<float>(3);
-        _va.AddBuffer(*_vb, _layout);
+        BufferLayout layout = { ShaderDataType::Float3, "a_Position" };
+        //_va.AddBuffer(_vb.get(), _layout);
 
-        _ib = new IndexBuffer(indices, 3);
-        _shader = new Shader("../res/shaders/Basic.shader");
-    }
-
-    TriangleGlyph::~TriangleGlyph()
-    {
-        delete _vb;
-        delete _ib;
-        delete _shader;
+        _ib.reset(IndexBuffer::Create(indices, 3));
+        _shader.reset(new Shader("../res/shaders/Basic.shader"));
     }
 
     void TriangleGlyph::Draw(Window* window) 
@@ -40,7 +33,7 @@ namespace Engine
         //Re-scale for window size change to keep proper shape proportions
         transformation = proj * transformation; 
         _shader->SetUniformMat4f("u_MVP", transformation);
-        _renderer.Draw(_va, *_ib, *_shader);
+        _renderer.Draw(_va, _ib.get(), _shader.get());
         _shader->Unbind();
     }
 

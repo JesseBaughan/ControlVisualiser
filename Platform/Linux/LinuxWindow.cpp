@@ -41,7 +41,7 @@ namespace Engine
 
         // Create window with graphics context
         //TODO: use the window struct data to set the window size rather than hardcoded values.
-        _window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
+        _window = glfwCreateWindow(_width, _height, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
         if (_window == NULL)
         {
             return;

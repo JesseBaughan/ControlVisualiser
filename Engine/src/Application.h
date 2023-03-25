@@ -3,6 +3,7 @@
 #include <memory>
 #include "Window.h"
 #include "ImGui/ImGuiRenderer.h"
+#include "Renderer/Renderer.h"
 
 namespace Engine
 {
@@ -26,9 +27,13 @@ namespace Engine
         //Singletons constuctor should be protected to avoid direct construction using new keyword.
          Application();
     private:
-         static Application* _instance;
-         std::unique_ptr<Engine::Window> _window;
-         std::unique_ptr<Engine::ImGuiRenderer> _imgui;
+        static Application* _instance;
+        std::unique_ptr<Engine::Window> _window;
+        std::unique_ptr<Engine::ImGuiRenderer> _imgui;
+
+        std::unique_ptr<Shader> _shader;
+        std::unique_ptr<VertexBuffer> _vb;
+        std::unique_ptr<IndexBuffer> _ib;
     };
 
     //To be defined in CLIENT

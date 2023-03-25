@@ -1,6 +1,5 @@
 #include "Window.h"
-#include "renderer.h"
-#include "shader.h"
+#include "Renderer/Renderer.h"
 
 #include "../Platform/OpenGL/OpenGLContext.h"
 
