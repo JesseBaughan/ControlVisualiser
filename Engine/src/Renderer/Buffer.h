@@ -102,8 +102,8 @@ namespace Engine
     public:
         virtual ~IndexBuffer() {}
 
-        virtual void Bind() = 0;
-        virtual void Unbind() = 0;
+        virtual void Bind() const = 0;
+        virtual void Unbind() const = 0;
 
         static IndexBuffer* Create(uint32_t* data, unsigned int count);
         virtual int GetCount() const = 0;
@@ -114,8 +114,8 @@ namespace Engine
     public:
         virtual ~VertexBuffer() {}
 
-        virtual void Bind() = 0;
-        virtual void Unbind() = 0;
+        virtual void Bind() const = 0;
+        virtual void Unbind() const = 0;
 
         virtual void SetLayout(const BufferLayout& layout) = 0;
         virtual const BufferLayout& GetLayout() const = 0;

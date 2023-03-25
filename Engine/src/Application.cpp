@@ -32,41 +32,24 @@ namespace Engine
 
     void Application::Run()
     {
-        unsigned int m_RendererID;
-        glGenVertexArrays(1, &m_RendererID);
-        glBindVertexArray(m_RendererID);
+        _va.reset(VertexArray::Create());
 
         float vehicle_vertices[3 * 7] = {
-            -0.1f, -0.3f, 0.0f, 1.0f, 0.8f, 0.2f, 1.0f,
-            0.1f, -0.3f, 0.0f, 1.0f, 0.8f, 0.2f, 1.0f,
-            0.0f,  0.3f, 0.0f, 1.0f, 0.8f, 0.2f, 1.0f
+            -0.5f, -0.5f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f,
+            0.5f, -0.5f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f,
+            0.0f,  0.5f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f
         };
         
         _vb.reset(VertexBuffer::Create(vehicle_vertices, sizeof(vehicle_vertices)));
 
-        {
-            BufferLayout layout = { {ShaderDataType::Float3, "a_Position"},
-                                    {ShaderDataType::Float4, "a_Colour"}};
-            _vb->SetLayout(layout);
-        }
+        BufferLayout layout = { {ShaderDataType::Float3, "a_Position"},
+                                {ShaderDataType::Float4, "a_Colour"}};
+        _vb->SetLayout(layout);
+        _va->AddVertexBuffer(_vb);
 
-        uint32_t index = 0;
-        const auto &layout = _vb->GetLayout();
-        for(auto& element: layout)
-        {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index, 
-                element.GetComponentCount(), GL_FLOAT, 
-                element.Normalised ? GL_TRUE : GL_FALSE, 
-                layout.GetStride(), 
-                (const void*)element.Offset);
-
-            index++;
-        }
-        
-        uint32_t indices[3] = {  // note that we start from 0!
-            0, 1, 3,   // first triangle
-        };  
+        uint32_t indices[3] = {0, 1, 3};  
+        _ib.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+        _va->SetIndexBuffer(_ib);
 
         std::string vertexSource = R"(
             #version 330
@@ -95,12 +78,10 @@ namespace Engine
 
             void main() 
             {
-                colour = vec4(v_Position * 0.5 + 0.5 , 1.0f);
+                colour = vec4(v_Position * 0.5 + 0.5 , 1.0);
                 colour = v_Colour;
             };
         )";
-
-        _ib.reset(IndexBuffer::Create(indices, 3));
 
         //_shader.reset(new Shader("Basic.shader"));
         _shader.reset(new Shader(vertexSource, fragmentSource));
@@ -126,11 +107,10 @@ namespace Engine
             //Re-scale for window size change to keep proper shape proportions
             transformation = transformation; 
             //_shader->SetUniformMat4f("u_MVP", transformation);
-
-            glBindVertexArray(m_RendererID);
+            
+            _va->Bind();
             glDrawElements(GL_TRIANGLES, _ib->GetCount(), GL_UNSIGNED_INT, 0);
 
-            _ib->Bind();
             _shader->Unbind();
 
             _imgui->End();

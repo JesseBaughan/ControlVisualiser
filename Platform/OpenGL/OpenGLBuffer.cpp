@@ -18,35 +18,35 @@ namespace Engine
         glDeleteBuffers(1, &_rendererID);
     }
 
-    void OpenGLVertexBuffer::Bind()
+    void OpenGLVertexBuffer::Bind() const
     {
         glBindBuffer(GL_ARRAY_BUFFER, _rendererID);
     }
 
-    void OpenGLVertexBuffer::Unbind()
+    void OpenGLVertexBuffer::Unbind() const
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* data, unsigned int count)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, unsigned int count)
         : _count(count) 
     {
         glGenBuffers(1, &_rendererID);
         //Bind our vertex buffer array to GL_ARRAY_BUFFER - this is now active
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _rendererID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_STATIC_DRAW); 
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW); 
     }
 
     OpenGLIndexBuffer::~OpenGLIndexBuffer()
     {
     }
 
-    void OpenGLIndexBuffer::Bind()
+    void OpenGLIndexBuffer::Bind() const
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _rendererID);
     }
 
-    void OpenGLIndexBuffer::Unbind()
+    void OpenGLIndexBuffer::Unbind() const
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }

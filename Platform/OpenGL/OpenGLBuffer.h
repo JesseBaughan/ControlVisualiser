@@ -8,8 +8,8 @@ namespace Engine
         OpenGLVertexBuffer(float* vertices, uint32_t size);
         ~OpenGLVertexBuffer();
 
-        void Bind() override;
-        void Unbind() override;
+        void Bind() const override;
+        void Unbind() const override;
 
         virtual const BufferLayout& GetLayout() const override { return _layout; }
         virtual void SetLayout(const BufferLayout& layout) override { _layout = layout; }
@@ -22,11 +22,11 @@ namespace Engine
     class OpenGLIndexBuffer : public IndexBuffer
     {
     public:
-        OpenGLIndexBuffer(uint32_t* vertices, uint32_t count);
+        OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
         ~OpenGLIndexBuffer();
 
-        void Bind() override;
-        void Unbind() override;
+        void Bind() const override;
+        void Unbind() const override;
 
         virtual int GetCount() const override { return _count; }
     private:

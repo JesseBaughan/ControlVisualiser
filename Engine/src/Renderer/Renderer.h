@@ -3,7 +3,6 @@
 #include <GL/gl3w.h>
 #include "Buffer.h"
 #include "shader.h"
-#include "vertex_array.h"
 
 namespace Engine 
 {
@@ -16,7 +15,7 @@ namespace Engine
     class Renderer
     {
     public:
-        virtual void Draw(VertexArray& va, IndexBuffer& ib, Shader& shader) const = 0;
+        //virtual void Draw(VertexArray& va, IndexBuffer& ib, Shader& shader) const = 0;
         virtual void Clear() const = 0;
         inline static RendererAPI GetAPI() { return s_RendererAPI; }
     private:
