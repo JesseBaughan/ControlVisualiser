@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 # Project name
 project(ControlVisualiser)
 
-# Use c++11
-set(CMAKE_CXX_STANDARD 11)
+# Use c++14
+set(CMAKE_CXX_STANDARD 14)
 
 set(IMGUI_DIR libs/imgui)
 set(GL3W_DIR libs/gl3w)

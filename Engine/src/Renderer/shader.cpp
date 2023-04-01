@@ -20,6 +20,10 @@ Shader::~Shader()
 ShaderProgramSource Shader::ParseShader(const std::string& filepath)
 {
 	std::ifstream stream(filepath);
+    if(!stream.is_open())
+    {
+        std::cout << "Cannot find file: " << filepath << "\n";
+    }
 
     enum class ShaderType
     {
@@ -34,12 +38,15 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
     {
         if(line.find("#shader") != std::string::npos)
         {
+            std::cout << "Found shader";
             if(line.find("vertex") != std::string::npos)
             {
+                std::cout << "Found vertex";
                 type = ShaderType::VERTEX;
             }
             else if(line.find("fragment") != std::string::npos)
             {
+                std::cout << "Found fragment";
                 type = ShaderType::FRAGMENT;
             }
         }
@@ -49,7 +56,7 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
         }
     }
 
-    return { stringStream[0].str(), stringStream[1].str()};
+    return {stringStream[0].str(), stringStream[1].str()};
 }
 
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
