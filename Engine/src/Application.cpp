@@ -83,8 +83,8 @@ namespace Engine
             };
         )";
 
-        //_shader.reset(new Shader("Basic.shader"));
-        _shader.reset(new Shader(vertexSource, fragmentSource));
+        _shader.reset(new Shader("Basic.shader"));
+        //_shader.reset(new Shader(vertexSource, fragmentSource));
 
         bool _running = true;
         while (_running)

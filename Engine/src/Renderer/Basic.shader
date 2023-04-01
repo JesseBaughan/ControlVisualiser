@@ -1,21 +1,27 @@
-#shader vertex
 #version 330
 
-in vec3 vp;
+layout(location = 0) in vec3 a_Position;
+layout(location = 1) in vec4 a_Colour;
 
-uniform mat4 u_MVP;
+out vec3 v_Position;
+out vec4 v_Colour;
 
 void main() 
 {
-  gl_Position = u_MVP * vec4(vp, 1.0);
+    v_Position = a_Position;
+    v_Colour = a_Colour;
+    gl_Position = vec4(a_Position, 1.0);
 };
 
-#shader fragment
 #version 330
 
-out vec4 frag_colour;
+layout(location = 0) out vec4 colour;
+
+in vec3 v_Position;
+in vec4 v_Colour;
 
 void main() 
 {
-  frag_colour = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+    colour = vec4(v_Position * 0.5 + 0.5 , 1.0);
+    colour = v_Colour;
 };
