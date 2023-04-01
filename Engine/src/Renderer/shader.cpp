@@ -4,11 +4,11 @@
 #include <iostream>
 #include <sstream>
 
-Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)
+Shader::Shader(const std::string& filePath)
     :   m_RendererID(0)
 {
-    //ShaderProgramSource source = ParseShader(filepath);
-    m_RendererID = CreateShader(vertexSource, fragmentSource);
+    ShaderProgramSource source = ParseShader(filePath);
+    m_RendererID = CreateShader(source.VertexShader, source.FragmentShader);
 }
 
 Shader::~Shader()
@@ -20,6 +20,10 @@ Shader::~Shader()
 ShaderProgramSource Shader::ParseShader(const std::string& filepath)
 {
 	std::ifstream stream(filepath);
+    if(!stream.is_open())
+    {
+        std::cout << "Cannot find file: " << filepath << "\n";
+    }
 
     enum class ShaderType
     {
@@ -49,7 +53,7 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
         }
     }
 
-    return { stringStream[0].str(), stringStream[1].str()};
+    return {stringStream[0].str(), stringStream[1].str()};
 }
 
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)

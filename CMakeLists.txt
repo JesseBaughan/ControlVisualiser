@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 # Project name
 project(ControlVisualiser)
 
-# Use c++11
-set(CMAKE_CXX_STANDARD 11)
+# Use c++14
+set(CMAKE_CXX_STANDARD 14)
 
 set(IMGUI_DIR libs/imgui)
 set(GL3W_DIR libs/gl3w)
@@ -64,7 +64,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC build/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PLATFORM_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_DIR}/src)
-target_include_directories(${PROJECT_NAME} PUBLIC ./SandBox)
+target_include_directories(${PROJECT_NAME} PUBLIC SandBox)
+target_include_directories(${PROJECT_NAME} PUBLIC SandBox/assets)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   glfw

@@ -12,7 +12,7 @@ struct ShaderProgramSource
 class Shader
 {
 public:
-    Shader(const std::string& vertexSource, const std::string& fragmentSource);
+    Shader(const std::string& filePath);
     ~Shader();
 
     void Bind() const;
