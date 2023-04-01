@@ -53,8 +53,7 @@ namespace Engine
 
         _shader.reset(new Shader("../SandBox/assets/shaders/Basic.shader"));
 
-        bool _running = true;
-        while (_running)
+        while (!_window->ShouldCloseWindow())
         {
             glClearColor(0.1f,  0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);

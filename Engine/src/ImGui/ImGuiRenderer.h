@@ -25,6 +25,8 @@ namespace Engine
 
         void Begin();
         void End();
+        void ShouldCloseWindow();
+
     private:
         bool _show_demo_window{true};
         void Init();

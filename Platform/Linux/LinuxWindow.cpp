@@ -69,4 +69,9 @@ namespace Engine
             glfwSwapInterval(0); 
         }
     }
+
+    bool LinuxWindow::ShouldCloseWindow() const
+    {
+        return glfwWindowShouldClose(_window);
+    }
 }

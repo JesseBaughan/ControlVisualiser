@@ -33,6 +33,8 @@ namespace Engine
 
         virtual void* GetNativeWindow() const = 0;
 
+        virtual bool ShouldCloseWindow() const {}; 
+
         static Window* Create(const WindowProperties &props = WindowProperties());
     };
 }
