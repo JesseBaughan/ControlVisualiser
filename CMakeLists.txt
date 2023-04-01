@@ -64,7 +64,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC build/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PLATFORM_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_DIR}/src)
-target_include_directories(${PROJECT_NAME} PUBLIC ./SandBox)
+target_include_directories(${PROJECT_NAME} PUBLIC SandBox)
+target_include_directories(${PROJECT_NAME} PUBLIC SandBox/assets)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
   glfw

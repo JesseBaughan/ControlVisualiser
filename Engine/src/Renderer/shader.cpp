@@ -38,15 +38,12 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
     {
         if(line.find("#shader") != std::string::npos)
         {
-            std::cout << "Found shader";
             if(line.find("vertex") != std::string::npos)
             {
-                std::cout << "Found vertex";
                 type = ShaderType::VERTEX;
             }
             else if(line.find("fragment") != std::string::npos)
             {
-                std::cout << "Found fragment";
                 type = ShaderType::FRAGMENT;
             }
         }
