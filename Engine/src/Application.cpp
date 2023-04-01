@@ -47,7 +47,7 @@ namespace Engine
         _vb->SetLayout(layout);
         _va->AddVertexBuffer(_vb);
 
-        uint32_t indices[3] = {0, 1, 3};  
+        uint32_t indices[3] = {0, 1, 2};  
         _ib.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
         _va->SetIndexBuffer(_ib);
 
