@@ -26,14 +26,14 @@ namespace Engine
 
         _va.reset(VertexArray::Create());
 
-        float vehicle_vertices[3 * 7] = {
+        float vertices[3 * 7] = {
             -0.5f, -0.5f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f,
             0.5f, -0.5f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f,
             0.0f,  0.5f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f
         };
         
         std::shared_ptr<VertexBuffer> _vb;
-        _vb.reset(VertexBuffer::Create(vehicle_vertices, sizeof(vehicle_vertices)));
+        _vb.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
         BufferLayout layout = { {ShaderDataType::Float3, "a_Position"},
                                 {ShaderDataType::Float4, "a_Colour"}};
