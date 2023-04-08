@@ -11,7 +11,7 @@ namespace Engine
     class Application
     {
     public:
-        virtual ~Application();
+       virtual ~Application() {};
 
         //Singletons should not have copy constructor
         Application(Application& other) = delete;

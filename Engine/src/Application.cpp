@@ -48,10 +48,6 @@ namespace Engine
         _shader = std::make_shared<Shader>("../SandBox/assets/shaders/Basic.shader");
     }
 
-    Application::~Application()
-    {
-    }
-
     void Application::Run()
     {
         while (!_window->ShouldCloseWindow())
