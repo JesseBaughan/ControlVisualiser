@@ -31,6 +31,9 @@ set(SOURCES
     ${ENGINE_DIR}/src/Renderer/Buffer.cpp
     ${ENGINE_DIR}/src/Renderer/Shader.cpp
     ${ENGINE_DIR}/src/Renderer/VertexArray.cpp
+    ${ENGINE_DIR}/src/Renderer/RenderCommand.cpp
+    ${ENGINE_DIR}/src/Renderer/RendererAPI.cpp
+    ${ENGINE_DIR}/src/Renderer/Renderer.cpp
     ./SandBox/SandboxApp.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
@@ -44,6 +47,7 @@ set(SOURCES
     ${PLATFORM_DIR}/OpenGL/OpenGLBuffer.cpp
     ${PLATFORM_DIR}/OpenGL/OpenGLVertexArray.cpp
     ${PLATFORM_DIR}/OpenGL/OpenGLRenderer.cpp
+    ${PLATFORM_DIR}/OpenGL/OpenGLRendererAPI.cpp
     ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
 )
 

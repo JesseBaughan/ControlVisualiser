@@ -1,23 +1,17 @@
 #pragma once
 
-#include <GL/gl3w.h>
-#include "Buffer.h"
+#include "RenderCommand.h"
 
 namespace Engine 
 {
-    enum class RendererAPI
-    {
-        None = 0,
-        OpenGL = 1
-    };
-
     class Renderer
     {
     public:
-        //virtual void Draw(VertexArray& va, IndexBuffer& ib, Shader& shader) const = 0;
-        virtual void Clear() const = 0;
-        inline static RendererAPI GetAPI() { return s_RendererAPI; }
-    private:
-        static RendererAPI s_RendererAPI;
+        static void BeginScene();
+        static void EndScene();
+
+        static void Submit(const std::shared_ptr<VertexArray>& VertexArray);
+
+        inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
     };
 }
