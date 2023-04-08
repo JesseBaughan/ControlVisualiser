@@ -23,15 +23,7 @@ namespace Engine
 
         _window = std::unique_ptr<Engine::Window>(Engine::Window::Create());
         _imgui = std::unique_ptr<Engine::ImGuiRenderer>(new Engine::ImGuiRenderer());
-    }
 
-    Application::~Application()
-    {
-
-    }
-
-    void Application::Run()
-    {
         _va.reset(VertexArray::Create());
 
         float vehicle_vertices[3 * 7] = {
@@ -54,7 +46,14 @@ namespace Engine
         _va->SetIndexBuffer(_ib);
 
         _shader = std::make_shared<Shader>("../SandBox/assets/shaders/Basic.shader");
+    }
 
+    Application::~Application()
+    {
+    }
+
+    void Application::Run()
+    {
         while (!_window->ShouldCloseWindow())
         {
             glClearColor(0.1f,  0.1f, 0.1f, 1.0f);
@@ -77,7 +76,7 @@ namespace Engine
             //_shader->SetUniformMat4f("u_MVP", transformation);
             
             _va->Bind();
-            glDrawElements(GL_TRIANGLES, _ib->GetCount(), GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, _va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, 0);
 
             _shader->Unbind();
 
