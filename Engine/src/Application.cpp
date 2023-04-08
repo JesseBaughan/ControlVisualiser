@@ -51,7 +51,7 @@ namespace Engine
         _ib.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
         _va->SetIndexBuffer(_ib);
 
-        _shader.reset(new Shader("../SandBox/assets/shaders/Basic.shader"));
+        _shader = std::make_shared<Shader>("../SandBox/assets/shaders/Basic.shader");
 
         while (!_window->ShouldCloseWindow())
         {
