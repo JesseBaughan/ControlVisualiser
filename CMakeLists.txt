@@ -29,7 +29,7 @@ set(SOURCES
     ${ENGINE_DIR}/src/Window.cpp
     ${ENGINE_DIR}/src/Renderer/Renderer.cpp
     ${ENGINE_DIR}/src/Renderer/Buffer.cpp
-    ${ENGINE_DIR}/src/Renderer/shader.cpp
+    ${ENGINE_DIR}/src/Renderer/Shader.cpp
     ${ENGINE_DIR}/src/Renderer/VertexArray.cpp
     ./SandBox/SandboxApp.cpp
     ${IMGUI_DIR}/imgui.cpp

@@ -4,7 +4,7 @@
 #include "ImGui/ImGuiRenderer.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/Buffer.h"
-#include "Renderer/shader.h"
+#include "Renderer/Shader.h"
 
 namespace Engine
 {

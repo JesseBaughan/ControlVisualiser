@@ -2,7 +2,6 @@
 
 #include <GL/gl3w.h>
 #include "Buffer.h"
-#include "shader.h"
 
 namespace Engine 
 {
