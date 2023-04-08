@@ -40,6 +40,7 @@ namespace Engine
             0.0f,  0.5f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f
         };
         
+        std::shared_ptr<VertexBuffer> _vb;
         _vb.reset(VertexBuffer::Create(vehicle_vertices, sizeof(vehicle_vertices)));
 
         BufferLayout layout = { {ShaderDataType::Float3, "a_Position"},
@@ -48,6 +49,7 @@ namespace Engine
         _va->AddVertexBuffer(_vb);
 
         uint32_t indices[3] = {0, 1, 2};  
+        std::shared_ptr<IndexBuffer> _ib;
         _ib.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
         _va->SetIndexBuffer(_ib);
 

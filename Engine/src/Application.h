@@ -34,8 +34,6 @@ namespace Engine
 
         std::shared_ptr<Shader> _shader;
         std::shared_ptr<VertexArray> _va;
-        std::shared_ptr<VertexBuffer> _vb;
-        std::shared_ptr<IndexBuffer> _ib;
     };
 
     //To be defined in CLIENT

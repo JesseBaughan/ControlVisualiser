@@ -30,6 +30,9 @@ namespace Engine
         virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer) override;
         virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer) override;
 
+        virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const { return _vertexBuffers; }
+        virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const { return _indexBuffer; }
+
         static OpenGLVertexArray* Create();
 
     private:
