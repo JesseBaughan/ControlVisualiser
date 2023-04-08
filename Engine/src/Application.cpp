@@ -78,8 +78,6 @@ namespace Engine
             _va->Bind();
             glDrawElements(GL_TRIANGLES, _va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, 0);
 
-            _shader->Unbind();
-
             _imgui->End();
 
             _window->OnUpdate();
