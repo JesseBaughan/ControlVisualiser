@@ -7,6 +7,7 @@ project(ControlVisualiser)
 # Use c++14
 set(CMAKE_CXX_STANDARD 14)
 
+# Set paths 
 set(IMGUI_DIR libs/imgui)
 set(GL3W_DIR libs/gl3w)
 set(ENGINE_DIR Engine)
@@ -25,7 +26,6 @@ endif()
 
 set(SOURCES 
     ${ENGINE_DIR}/src/Application.cpp
-    #${ENGINE_DIR}/src/Glyph/Triangle.cpp
     ${ENGINE_DIR}/src/Window.cpp
     ${ENGINE_DIR}/src/Renderer/Renderer.cpp
     ${ENGINE_DIR}/src/Renderer/Buffer.cpp
@@ -34,7 +34,7 @@ set(SOURCES
     ${ENGINE_DIR}/src/Renderer/RenderCommand.cpp
     ${ENGINE_DIR}/src/Renderer/RendererAPI.cpp
     ${ENGINE_DIR}/src/Renderer/Renderer.cpp
-    ./SandBox/SandboxApp.cpp
+    ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
     ${IMGUI_DIR}/imgui_draw.cpp
@@ -48,25 +48,27 @@ set(SOURCES
     ${PLATFORM_DIR}/OpenGL/OpenGLVertexArray.cpp
     ${PLATFORM_DIR}/OpenGL/OpenGLRenderer.cpp
     ${PLATFORM_DIR}/OpenGL/OpenGLRendererAPI.cpp
-    ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
+    ./SandBox/SandboxApp.cpp
 )
 
+# Add our unit tests
 add_subdirectory(test)
 
-#Add GTest
+# Add GTest
 add_subdirectory(${LIBS_DIR}/googletest)
 
 # Add all the source files needed to build the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Make sure we get all compiler output
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra)
+target_compile_options(${PROJECT_NAME} PUBLIC -Wall -Wextra)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${GL3W_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LIBS_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC build/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${PLATFORM_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC ./)
 target_include_directories(${PROJECT_NAME} PUBLIC ${ENGINE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PUBLIC SandBox)
 target_include_directories(${PROJECT_NAME} PUBLIC SandBox/assets)

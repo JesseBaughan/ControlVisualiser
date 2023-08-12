@@ -1,5 +1,6 @@
-#include "OpenGLContext.h"
 #include <stdio.h>
+
+#include "OpenGLContext.h"
 
 namespace Engine
 {

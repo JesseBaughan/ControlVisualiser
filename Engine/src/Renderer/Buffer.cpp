@@ -1,8 +1,7 @@
 #include "Renderer.h"
 #include "Buffer.h"
 
-//TODO: fix this include path so not relative.
-#include "../../Platform/OpenGL/OpenGLBuffer.h"
+#include "Platform/OpenGL/OpenGLBuffer.h"
 
 namespace Engine
 {

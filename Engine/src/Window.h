@@ -2,8 +2,6 @@
 
 #include <string>
 
-//This class utilises the "Factory Method" design pattern.
-
 namespace Engine
 {
     struct WindowProperties

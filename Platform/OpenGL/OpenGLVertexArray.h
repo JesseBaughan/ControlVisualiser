@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include "../../Engine/src/Renderer/Renderer.h"
-#include "../../Engine/src/Renderer/VertexArray.h"
+#include "Engine/src/Renderer/Renderer.h"
+#include "Engine/src/Renderer/VertexArray.h"
 
 
 namespace Engine

@@ -1,4 +1,4 @@
-#include "Linux/LinuxWindow.h"
+#include "Platform/Linux/LinuxWindow.h"
 
 #define PLATFORM_LINUX
 
@@ -12,5 +12,4 @@ namespace Engine
 
         return nullptr;
     }
-
 }

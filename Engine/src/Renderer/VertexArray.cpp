@@ -1,8 +1,7 @@
 #include "Renderer.h"
 #include "VertexArray.h"
 
-//TODO: fix this include path so not relative.
-#include "../../Platform/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace Engine
 {
