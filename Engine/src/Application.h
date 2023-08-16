@@ -8,34 +8,36 @@
 
 namespace Engine
 {
-    class Application
-    {
-    public:
-       virtual ~Application() {};
 
-        //Singletons should not have copy constructor
-        Application(Application& other) = delete;
+class Application
+{
+public:
+    virtual ~Application() {};
 
-        //Singletons should not have copy assignment constructor
-        void operator=(const Application&) = delete;
+    // Singletons should not have copy constructor
+    Application(Application& other) = delete;
 
-        void Run();
+    // Singletons should not have copy assignment constructor
+    void operator=(const Application&) = delete;
 
-        static Application& Get() { return *_instance; }
+    void Run();
 
-        Window& GetWindow() { return *_window; }
-    protected:
-        //Singletons constuctor should be protected to avoid direct construction using new keyword.
-         Application();
-    private:
-        static Application* _instance;
-        std::unique_ptr<Engine::Window> _window;
-        std::unique_ptr<Engine::ImGuiRenderer> _imgui;
+    static Application& Get() { return *_instance; }
 
-        std::shared_ptr<Shader> _shader;
-        std::shared_ptr<VertexArray> _va;
-    };
+    Window& GetWindow() { return *_window; }
+protected:
+    // Singletons constuctor should be protected to avoid direct construction using new keyword.
+    Application();
+private:
+    static Application* _instance;
+    std::unique_ptr<Engine::Window> _window;
+    std::unique_ptr<Engine::ImGuiRenderer> _imgui;
 
-    //To be defined in CLIENT
-    Application* CreateApplication();
+    std::shared_ptr<Shader> _shader;
+    std::shared_ptr<VertexArray> _va;
+};
+
+//To be defined in CLIENT
+Application* CreateApplication();
+
 }

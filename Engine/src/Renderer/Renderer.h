@@ -4,14 +4,16 @@
 
 namespace Engine 
 {
-    class Renderer
-    {
-    public:
-        static void BeginScene();
-        static void EndScene();
 
-        static void Submit(const std::shared_ptr<VertexArray>& VertexArray);
+class Renderer
+{
+public:
+    static void BeginScene();
+    static void EndScene();
 
-        inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
-    };
+    static void Submit(const std::shared_ptr<VertexArray>& VertexArray);
+
+    inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+};
+
 }

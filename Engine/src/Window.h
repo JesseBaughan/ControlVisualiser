@@ -4,35 +4,37 @@
 
 namespace Engine
 {
-    struct WindowProperties
+
+struct WindowProperties
+{
+    std::string Title;
+    unsigned int Width;
+    unsigned int Height;
+
+    WindowProperties(const std::string& title = "Engine", 
+                    unsigned int width = 1280, 
+                    unsigned int height = 720)
+        : Title(title), Width(width), Height(height)
     {
-        std::string Title;
-        unsigned int Width;
-        unsigned int Height;
 
-        WindowProperties(const std::string& title = "Engine", 
-                        unsigned int width = 1280, 
-                        unsigned int height = 720)
-            : Title(title), Width(width), Height(height)
-        {
+    }
+};
 
-        }
-    };
+class Window
+{
+public:
+    virtual ~Window() = default;
 
-    class Window
-    {
-    public:
-        virtual ~Window() = default;
+    virtual void OnUpdate() = 0;
 
-        virtual void OnUpdate() = 0;
+    virtual unsigned int GetWidth() const = 0;
+    virtual unsigned int GetHeight() const = 0;
 
-        virtual unsigned int GetWidth() const = 0;
-        virtual unsigned int GetHeight() const = 0;
+    virtual void* GetNativeWindow() const = 0;
 
-        virtual void* GetNativeWindow() const = 0;
+    virtual bool ShouldCloseWindow() const {}; 
 
-        virtual bool ShouldCloseWindow() const {}; 
+    static Window* Create(const WindowProperties &props = WindowProperties());
+};
 
-        static Window* Create(const WindowProperties &props = WindowProperties());
-    };
 }

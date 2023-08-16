@@ -7,33 +7,34 @@
 
 namespace Engine
 {
-    class LinuxWindow : public Window
-    {
-        public:
-            LinuxWindow(const WindowProperties &props);
-            virtual ~LinuxWindow();
 
-            void OnUpdate() override;
+class LinuxWindow : public Window
+{
+    public:
+        LinuxWindow(const WindowProperties &props);
+        virtual ~LinuxWindow();
 
-            inline unsigned int GetWidth() const override { return _width; }
-            inline unsigned int GetHeight() const override { return _height; }
-            virtual void* GetNativeWindow() const { return _window; };
-            bool ShouldCloseWindow() const override;
+        void OnUpdate() override;
 
-        private:
-            GLFWwindow* _window;
-            GraphicsContext* _context;
+        inline unsigned int GetWidth() const override { return _width; }
+        inline unsigned int GetHeight() const override { return _height; }
+        virtual void* GetNativeWindow() const { return _window; };
+        bool ShouldCloseWindow() const override;
 
-            virtual void Init(const WindowProperties &props);
-            virtual void Shutdown();
-            void SetVSync(bool enabled);
+    private:
+        GLFWwindow* _window;
+        GraphicsContext* _context;
 
-            bool _show_demo_window{true};
-            bool _GLFWwindowInitialised{false};
-        
-            unsigned int _width{0}; 
-            unsigned int _height{0}; 
-            std::string _title; 
-    };
+        virtual void Init(const WindowProperties &props);
+        virtual void Shutdown();
+        void SetVSync(bool enabled);
+
+        bool _show_demo_window{true};
+        bool _GLFWwindowInitialised{false};
+    
+        unsigned int _width{0}; 
+        unsigned int _height{0}; 
+        std::string _title; 
+};
     
 } // namespace Engine
