@@ -15,6 +15,7 @@ namespace Engine
 Application* Application::_instance = nullptr;
 
 Application::Application()
+    : _camera(-2.0f, 2.0f, -2.0f, 2.0f)
 {
     if(_instance != nullptr)
     {
@@ -61,6 +62,7 @@ void Application::Run()
         Renderer::BeginScene();
 
         _shader->Bind();
+        _shader->SetUniformMat4f("u_ViewProjection", _camera.getViewProjectionMatric());
 
         Renderer::Submit(_va);
 
