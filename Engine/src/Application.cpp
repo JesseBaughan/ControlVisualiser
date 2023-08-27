@@ -7,6 +7,7 @@
 
 #include "Application.h"
 #include "Renderer/Renderer.h"
+#include <unistd.h>
 
 namespace Engine
 {
@@ -15,7 +16,7 @@ namespace Engine
 Application* Application::_instance = nullptr;
 
 Application::Application()
-    : _camera(-2.0f, 2.0f, -2.0f, 2.0f)
+    : _camera(-1.6f, 1.6f, -0.9f, 0.9f)
 {
     if(_instance != nullptr)
     {
@@ -57,6 +58,11 @@ void Application::Run()
         RenderCommand::SetClearColour({0.1f, 0.1f, 0.1f, 1});
         RenderCommand::Clear();
 
+        //_camera.setPosition({0.8f, 0.8f, 0});
+        static float rotation = 0;
+        _camera.setRotation(rotation);
+        rotation += 5.0f;
+
         _imgui->Begin();
 
         Renderer::BeginScene(_camera);
@@ -68,6 +74,8 @@ void Application::Run()
         _imgui->End();
 
         _window->OnUpdate();
+
+        usleep(10000);
     }
 }
 

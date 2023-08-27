@@ -24,7 +24,7 @@ private:
     glm::mat4 _viewMatrix;
     glm::mat4 _pvMatrix;
 
-    glm::vec3 _position;
+    glm::vec3 _position{0.0f};
     float _rotation{0.0f};
 };
 
