@@ -2,14 +2,14 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Engine::OrthgraphicCamera::OrthgraphicCamera(float left, float right, float bottom, float top)
+Engine::OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)
     : _projectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f))
     , _viewMatrix(1.0f)
 {
     _pvMatrix = _projectionMatrix * _viewMatrix;
 }
 
-void Engine::OrthgraphicCamera::RecalculateViewProjectionMatrix()
+void Engine::OrthographicCamera::RecalculateViewProjectionMatrix()
 {
     //TODO: what's best for performance here?
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), _position) * 

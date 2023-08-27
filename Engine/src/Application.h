@@ -37,8 +37,7 @@ private:
     std::shared_ptr<Shader> _shader;
     std::shared_ptr<VertexArray> _va;
 
-    OrthgraphicCamera _camera;
-
+    OrthographicCamera _camera;
 };
 
 //To be defined in CLIENT

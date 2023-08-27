@@ -59,12 +59,9 @@ void Application::Run()
 
         _imgui->Begin();
 
-        Renderer::BeginScene();
+        Renderer::BeginScene(_camera);
 
-        _shader->Bind();
-        _shader->SetUniformMat4f("u_ViewProjection", _camera.getViewProjectionMatric());
-
-        Renderer::Submit(_va);
+        Renderer::Submit(_shader, _va);
 
         Renderer::EndScene();
 

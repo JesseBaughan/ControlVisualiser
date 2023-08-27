@@ -1,12 +1,13 @@
+#pragma once
 
 #include <glm/glm.hpp>
 
 namespace Engine
 {
-class OrthgraphicCamera
+class OrthographicCamera
 {
 public:
-    OrthgraphicCamera(float left, float right, float bottom, float top);
+    OrthographicCamera(float left, float right, float bottom, float top);
 
     void setPosition(glm::vec3 position) { _position = position; RecalculateViewProjectionMatrix(); }
     const glm::vec3& getPosition() const { return _position; }
@@ -14,7 +15,7 @@ public:
     void setRotation(float rotation) { _rotation = rotation; RecalculateViewProjectionMatrix(); }
     const float& getRotation() const { return _rotation; }
 
-    const glm::mat4& getViewProjectionMatric() const { return _pvMatrix; }
+    const glm::mat4& getViewProjectionMatrix() const { return _pvMatrix; }
     const glm::mat4& getviewMatrix() const { return _viewMatrix; }
 private:
     void RecalculateViewProjectionMatrix();
