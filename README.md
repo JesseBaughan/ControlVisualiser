@@ -5,6 +5,11 @@ For example, a user may be working with an L1 controller but doesn't yet have a 
 works for various system states. Using this tool, the user is able to input various system states and simluate how the 
 controller would respond.
 
+## Current state
+I am still in the process of building the underlying engine that is based heavily off of Cherrno's Hazel engine. One 
+all the requried functionality of the engine is added I will begin to build the necessary abstractions for creating the 2D 
+control visualisations.
+
 ## Install dependencies  
 ### Linux:   
 sudo apt-get update  
