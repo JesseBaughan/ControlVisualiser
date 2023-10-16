@@ -73,13 +73,13 @@ void Application::Run()
         _camera.setRotation(rotation);
         rotation += 5.0f;
 
-        _imgui->Begin();
-
         Renderer::BeginScene(_camera);
 
         Renderer::Submit(_shader, _va);
 
         Renderer::EndScene();
+
+        _imgui->Begin();
 
         for(Layer* layer : _layerStack)
         {
