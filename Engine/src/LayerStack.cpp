@@ -18,11 +18,13 @@ LayerStack::~LayerStack()
     }
 }
 
+// Layers are pushed to front half of the layer stack
 void LayerStack::PushLayer(Layer* layer)
 {
     _layerInsert = _layers.emplace(_layerInsert, layer);
 }
 
+// Overlays are pushed to back half of layer stack
 void LayerStack::PushOverlay(Layer* overlay)
 {
     _layers.emplace_back(overlay);

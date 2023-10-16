@@ -51,6 +51,16 @@ Application::Application()
     _shader = std::make_shared<Shader>("../SandBox/assets/shaders/Basic.shader");
 }
 
+void Application::PushLayer(Layer* layer)
+{
+    _layerStack.PushLayer(layer);
+}
+
+void Application::PushOverlay(Layer* overlay)
+{
+    _layerStack.PushLayer(overlay);
+}
+
 void Application::Run()
 {
     while (!_window->ShouldCloseWindow())
@@ -70,6 +80,11 @@ void Application::Run()
         Renderer::Submit(_shader, _va);
 
         Renderer::EndScene();
+
+        for(Layer* layer : _layerStack)
+        {
+            layer->OnUpdate();
+        }
 
         _imgui->End();
 

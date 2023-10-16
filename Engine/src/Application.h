@@ -6,6 +6,7 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/Shader.h"
 #include "OrthographicCamera.h"
+#include "LayerStack.h"
 
 namespace Engine
 {
@@ -26,9 +27,14 @@ public:
     static Application& Get() { return *_instance; }
 
     Window& GetWindow() { return *_window; }
+
+    void PushLayer(Layer* layer);
+    void PushOverlay(Layer* layer);
+
 protected:
     // Singletons constuctor should be protected to avoid direct construction using new keyword.
     Application();
+
 private:
     static Application* _instance;
     std::unique_ptr<Engine::Window> _window;
@@ -38,6 +44,7 @@ private:
     std::shared_ptr<VertexArray> _va;
 
     OrthographicCamera _camera;
+    LayerStack _layerStack;
 };
 
 //To be defined in CLIENT
