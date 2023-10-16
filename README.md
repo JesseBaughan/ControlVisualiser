@@ -1,4 +1,10 @@
-# **Control Visualisation Tool**  
+# **Control Visualisation Tool**
+## Overview
+The goal of this project is to provide an easy GUI based tool for creating nice visualisations of control approaches.
+For example, a user may be working with an L1 controller but doesn't yet have a deep understanding of how the controller
+works for various system states. Using this tool, the user is able to input various system states and simluate how the 
+controller would respond.
+
 ## Install dependencies  
 ### Linux:   
 sudo apt-get update  
