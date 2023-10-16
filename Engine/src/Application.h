@@ -39,8 +39,6 @@ private:
     static Application* _instance;
     std::unique_ptr<Engine::Window> _window;
     std::unique_ptr<Engine::ImGuiRenderer> _imgui;
-
-
     LayerStack _layerStack;
 };
 

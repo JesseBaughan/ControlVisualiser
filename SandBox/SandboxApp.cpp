@@ -39,7 +39,6 @@ public:
         RenderCommand::SetClearColour({0.1f, 0.1f, 0.1f, 1});
         RenderCommand::Clear();
 
-        //_camera.setPosition({0.8f, 0.8f, 0});
         static float rotation = 0;
         _camera.setRotation(rotation);
         rotation += 5.0f;
@@ -49,7 +48,6 @@ public:
         Renderer::Submit(_shader, _va);
 
         Renderer::EndScene();
-
     }
 
 private:
