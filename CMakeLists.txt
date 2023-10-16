@@ -37,6 +37,7 @@ set(SOURCES
     ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
     ${ENGINE_DIR}/src/OrthographicCamera.cpp
     ${ENGINE_DIR}/src/Layer.cpp
+    ${ENGINE_DIR}/src/LayerStack.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
     ${IMGUI_DIR}/imgui_draw.cpp
