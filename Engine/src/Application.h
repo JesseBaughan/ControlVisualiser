@@ -40,10 +40,7 @@ private:
     std::unique_ptr<Engine::Window> _window;
     std::unique_ptr<Engine::ImGuiRenderer> _imgui;
 
-    std::shared_ptr<Shader> _shader;
-    std::shared_ptr<VertexArray> _va;
 
-    OrthographicCamera _camera;
     LayerStack _layerStack;
 };
 
