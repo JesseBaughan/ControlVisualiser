@@ -1,9 +1,9 @@
 
 #pragma once
 
-#include "Application.h"
+#include "Core/Application.h"
 #include "EntryPoint.h"
-#include "Layer.h"
+#include "Core/Layer.h"
 
 #include "Renderer/Renderer.h"
 #include "Renderer/RenderCommand.h"

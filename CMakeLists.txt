@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(IMGUI_DIR libs/imgui)
 set(GL3W_DIR libs/gl3w)
 set(ENGINE_DIR Engine)
+set(CORE_DIR ${ENGINE_DIR}/src/Core)
 set(LIBS_DIR libs/)
 set(PLATFORM_DIR Platform)
 
@@ -25,8 +26,10 @@ if(NOT OPENGL_FOUND)
 endif()
 
 set(SOURCES 
-    ${ENGINE_DIR}/src/Application.cpp
-    ${ENGINE_DIR}/src/Window.cpp
+    ${CORE_DIR}/Application.cpp
+    ${CORE_DIR}/Window.cpp
+    ${CORE_DIR}/Layer.cpp
+    ${CORE_DIR}/LayerStack.cpp
     ${ENGINE_DIR}/src/Renderer/Renderer.cpp
     ${ENGINE_DIR}/src/Renderer/Buffer.cpp
     ${ENGINE_DIR}/src/Renderer/Shader.cpp
@@ -36,8 +39,6 @@ set(SOURCES
     ${ENGINE_DIR}/src/Renderer/Renderer.cpp
     ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
     ${ENGINE_DIR}/src/OrthographicCamera.cpp
-    ${ENGINE_DIR}/src/Layer.cpp
-    ${ENGINE_DIR}/src/LayerStack.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
     ${IMGUI_DIR}/imgui_draw.cpp

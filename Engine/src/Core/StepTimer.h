@@ -1,8 +1,9 @@
 /**
- * @brief This time class is based off of the DirectX StepTimer sample. Original
- * code can be found here:
+ * @brief This time class is based off of the DirectX StepTimer sample.
+ * Original code can be found here:
  * https://github.com/microsoft/DirectX-Graphics-Samples/blob/master/Samples/UWP/D3D12Bundles/src/StepTimer.h
 */
+
 #pragma once
 
 #include <stdint.h>

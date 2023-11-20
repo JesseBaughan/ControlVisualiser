@@ -3,17 +3,13 @@
 #include "backends/imgui_impl_opengl3.h"
 
 #include "ImGuiRenderer.h"
-#include "Application.h"
+#include "Core/Application.h"
 
 namespace Engine
 {
     ImGuiRenderer::ImGuiRenderer()
     {
         Init();
-    }
-
-    ImGuiRenderer::~ImGuiRenderer()
-    {
     }
 
     void ImGuiRenderer::Init()

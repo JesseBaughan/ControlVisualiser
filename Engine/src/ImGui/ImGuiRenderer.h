@@ -21,7 +21,7 @@ namespace Engine
     {
     public:
         ImGuiRenderer();
-        ~ImGuiRenderer();
+        ~ImGuiRenderer() = default;
 
         void Begin();
         void End();
