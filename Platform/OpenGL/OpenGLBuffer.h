@@ -1,4 +1,4 @@
-#include "../../Engine/src/Renderer/Buffer.h"
+#include "Renderer/Buffer.h"
 
 namespace Engine
 {

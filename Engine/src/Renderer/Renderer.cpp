@@ -1,6 +1,5 @@
 #include "Renderer.h"
 #include "Shader.h"
-#include "OrthographicCamera.h"
 
 namespace Engine
 {

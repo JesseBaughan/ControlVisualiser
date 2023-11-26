@@ -31,7 +31,7 @@ public:
 
     virtual void* GetNativeWindow() const = 0;
 
-    virtual bool ShouldCloseWindow() const {}; 
+    virtual bool ShouldCloseWindow() const { return false; };
 
     static Window* Create(const WindowProperties &props = WindowProperties());
 };

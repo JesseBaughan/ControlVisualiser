@@ -4,21 +4,8 @@
 #include "Engine/src/Renderer/Renderer.h"
 #include "Engine/src/Renderer/VertexArray.h"
 
-
 namespace Engine
 {
-
-static unsigned int ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-{
-    switch(type)
-    {
-        case ShaderDataType::Float3: return 3; 
-        case ShaderDataType::Float4: return 4; 
-    }
-
-    //TODO: assert unknown type.
-    return 0;
-}
 
 class OpenGLVertexArray : public VertexArray
 {

@@ -17,10 +17,11 @@ static unsigned int GetSizeOfType(ShaderDataType type)
 {
     switch (type)
     {
-        case ShaderDataType::Float: return 4;
+        case ShaderDataType::Float:  return 4;
         case ShaderDataType::Float2: return 4 * 2;
         case ShaderDataType::Float3: return 4 * 3;
         case ShaderDataType::Float4: return 4 * 4;
+        case ShaderDataType::None:   break;
     }
 
     //ASSERT(false, "Unknown shader type!");
@@ -32,7 +33,7 @@ struct BufferElement
     std::string Name;
     ShaderDataType Type;
     uint32_t Size;
-    uint32_t Offset;
+    int Offset;
     bool Normalised;
 
     BufferElement() {};
@@ -46,7 +47,7 @@ struct BufferElement
     {
     }
 
-    uint32_t GetComponentCount() const
+    int GetComponentCount() const
     {
         switch (Type)
         {
@@ -54,6 +55,7 @@ struct BufferElement
             case ShaderDataType::Float2:    return 2;
             case ShaderDataType::Float3:    return 3;
             case ShaderDataType::Float4:    return 4;
+            case ShaderDataType::None:      break;
         }
 
         //TODO: Throw and assert.
@@ -83,7 +85,7 @@ public:
 private:
     void CalculateOffsetsAndStride()
     {
-        uint32_t offset = 0;
+        int offset = 0;
         _stride = 0;
 
         for(auto& element: _elements)

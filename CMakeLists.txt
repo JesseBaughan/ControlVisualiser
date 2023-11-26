@@ -30,6 +30,7 @@ set(SOURCES
     ${CORE_DIR}/Window.cpp
     ${CORE_DIR}/Layer.cpp
     ${CORE_DIR}/LayerStack.cpp
+    ${CORE_DIR}/OrthographicCamera.cpp
     ${ENGINE_DIR}/src/Renderer/Renderer.cpp
     ${ENGINE_DIR}/src/Renderer/Buffer.cpp
     ${ENGINE_DIR}/src/Renderer/Shader.cpp
@@ -38,7 +39,6 @@ set(SOURCES
     ${ENGINE_DIR}/src/Renderer/RendererAPI.cpp
     ${ENGINE_DIR}/src/Renderer/Renderer.cpp
     ${ENGINE_DIR}/src/ImGui/ImGuiRenderer.cpp
-    ${ENGINE_DIR}/src/OrthographicCamera.cpp
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_demo.cpp
     ${IMGUI_DIR}/imgui_draw.cpp

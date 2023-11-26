@@ -1,4 +1,4 @@
-#include "Engine/src/Renderer/GraphicsConext.h"
+#include "Renderer/GraphicsConext.h"
 
 #if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
 #include <GL/gl3w.h>    // Initialize with gl3wInit()

@@ -1,8 +1,6 @@
 #include "Core/Window.h"
 #include "Renderer/Renderer.h"
-
 #include "Platform/OpenGL/OpenGLContext.h"
-
 #include "backends/imgui_impl_glfw.h"
 
 namespace Engine

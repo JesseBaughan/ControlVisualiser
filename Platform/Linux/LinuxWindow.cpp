@@ -34,7 +34,7 @@ void LinuxWindow::Init(const WindowProperties &props)
 
     if(!_GLFWwindowInitialised)
     {
-        int success = glfwInit();
+        glfwInit();
         //TODO: output something to tell us if successful.
         glfwSetErrorCallback(glfw_error_callback);
         _GLFWwindowInitialised = true;
@@ -43,7 +43,7 @@ void LinuxWindow::Init(const WindowProperties &props)
     // Create window with graphics context
     //TODO: use the window struct data to set the window size rather than hardcoded values.
     _window = glfwCreateWindow(_width, _height, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
-    if (_window == NULL)
+    if (_window == nullptr)
     {
         return;
     }
